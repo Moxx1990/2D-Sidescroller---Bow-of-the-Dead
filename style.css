@@ -1,0 +1,10 @@
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+}
+
+canvas {
+    background-color: black;
+}
