@@ -18,6 +18,7 @@ class Enemy extends MoveableObject {
 
     animate() {
         this.moveLeft();
+        this.otherDirection = true;
         setInterval(() => {
             this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
         }, 150);

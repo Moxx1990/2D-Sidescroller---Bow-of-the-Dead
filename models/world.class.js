@@ -1,40 +1,35 @@
 class World {
 
 character = new Character();
-enemies = [
-    new Enemy(),
-    new Enemy(),
-    new Enemy(),
-];
-clouds = [
-    new Cloud(),
-];
-backgrounds = [
-    new BackGroundObject('img/Background/Sky.png', 0, 0),
-    new BackGroundObject('img/Background/Clouds.png', 0, 0),
-    new BackGroundObject('img/Background/Mountain_Back.png', 0, 0),
-    new BackGroundObject('img/Background/Mountain_Middle.png', 0, 0),
-    new BackGroundObject('img/Background/Mountain_Front.png', 0, 0),
-    new BackGroundObject('img/Background/Fuji.png', 0, 0),
-    new BackGroundObject('img/Background/Shrine_Multiple.png', 0, 0),
-    new BackGroundObject('img/Background/BackgroundTrees.png', 0, 0),
-    new BackGroundObject('img/Background/Ground.png', 0, 0),
-];
+enemies = level1.enemies;
+clouds = level1.clouds;
+backgrounds = level1.backgrounds
 canvas;
 ctx;
+keyboard;
+camera_x = 0;
 
-    constructor(canvas) {
+    constructor(canvas, keyboard) {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
+        this.keyboard = keyboard;
         this.draw();
+        this.setWorld();
+    }
+
+    setWorld() {
+        this.character.world = this;
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.backgrounds);
         this.addToMap(this.character);
         this.addObjectsToMap(this.enemies);
         this.addObjectsToMap(this.clouds);
+
+        this.ctx.translate(-this.camera_x, 0);
         
 
         requestAnimationFrame(() => this.draw());
@@ -47,6 +42,13 @@ ctx;
     }
 
     addToMap(mo) {
+    if (mo.otherDirection) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+
+    }
     if (mo.getFrameX) {
         this.ctx.drawImage(
             mo.img,
@@ -61,6 +63,10 @@ ctx;
         );
     } else {
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+    }
+    if (mo.otherDirection) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
     }}
 
 }
