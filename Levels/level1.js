@@ -1,7 +1,9 @@
 const level1 = new Level(
-    [new Enemy(),
+    [
     new Enemy(),
     new Enemy(),
+    new Enemy(),
+    new Endboss(),
     ], 
 
     [
@@ -9,6 +11,13 @@ const level1 = new Level(
     ], 
 
     [
+    new BackGroundObject('img/Background/Sky.png', -720, 0),
+    new BackGroundObject('img/Background/Clouds.png', -720, 0),
+    new BackGroundObject('img/Background/Mountain_Back.png', -720, 0),
+    new BackGroundObject('img/Background/Mountain_Middle.png', -720, 0),
+    new BackGroundObject('img/Background/Mountain_Front.png', -720, 0),
+    new BackGroundObject('img/Background/BackgroundTrees.png', -720, 0),
+    new BackGroundObject('img/Background/Ground.png', -720, 0),
     new BackGroundObject('img/Background/Sky.png', 0, 0),
     new BackGroundObject('img/Background/Clouds.png', 0, 0),
     new BackGroundObject('img/Background/Mountain_Back.png', 0, 0),
@@ -43,5 +52,4 @@ const level1 = new Level(
     new BackGroundObject('img/Background/House.png', 720*3, 0),
     new BackGroundObject('img/Background/Ground.png', 720*3, 0),
     ]
-
 );

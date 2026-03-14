@@ -1,7 +1,8 @@
-class Enemy extends MoveableObject {
+class Endboss extends MoveableObject {
 
-    height = 150;
-    width = 200;
+    height = 350;
+    width = 250;
+    y = 70;
     
     currentFrame = 0;
     totalFrames = 6;
@@ -11,13 +12,13 @@ class Enemy extends MoveableObject {
     constructor() {
         super();
         this.loadImage('img/Enemy/Basic/Walk.png');
-        this.x = 600 + Math.random() * 500;
-        this.speed = 0.15 + Math.random() * 0.25;
+        this.x = 2050
+        this.speed = 0.15;
         this.playAnimation();
     }
 
     getFrameX() {
         return this.currentFrame * this.frameWidth;
     }
-  
+
 }
