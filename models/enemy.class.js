@@ -13,7 +13,7 @@ class Enemy extends MoveableObject {
         this.loadImage('img/Enemy/Basic/Walk.png');
         this.x = 600 + Math.random() * 500;
         this.speed = 0.15 + Math.random() * 0.25;
-        this.playAnimation();
+        this.playEnemyAnimation();
     }
 
     getFrameX() {

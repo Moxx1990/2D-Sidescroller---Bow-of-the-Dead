@@ -14,7 +14,7 @@ class Endboss extends MoveableObject {
         this.loadImage('img/Enemy/Basic/Walk.png');
         this.x = 2050
         this.speed = 0.15;
-        this.playAnimation();
+        this.playEnemyAnimation();
     }
 
     getFrameX() {
