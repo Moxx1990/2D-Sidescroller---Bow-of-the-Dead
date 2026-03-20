@@ -1,21 +1,15 @@
-class MoveableObject {
-    x = 120;
-    y = 270;
-    img;
-    height = 150;
-    width = 200;
+class MoveableObject extends DrawableObject {
+    
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     accelaration = 2.5;
+    energy = 100;
+    lastHit = 0;
 
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
-    }
-
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
     drawFrame(ctx) {
@@ -68,6 +62,25 @@ class MoveableObject {
             this.y + this.height > mo.y &&
             this.x < mo.x + mo.width &&
             this.y < mo.y + mo.height;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    hit() {
+        this.energy -= 5;
+        if(this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 0.5;
     }
 
 }

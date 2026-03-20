@@ -6,6 +6,8 @@ class Character extends MoveableObject {
     frameHeight = 128;
     world;
     speed = 5;
+    bottles = 0;
+    coins = 0;
     
     constructor() {
         super();
@@ -32,7 +34,13 @@ class Character extends MoveableObject {
 
     setInterval(() => {
         this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
-        if (this.isAboveGround()) {
+        if (this.isDead()) {
+            this.loadImage('img/Character/Dead.png')
+        }
+        else if (this.isHurt()) {
+            this.loadImage('img/Character/Hurt.png')
+        }
+        else if (this.isAboveGround()) {
             this.loadImage('img/Character/Jump.png');
         }
         else if (this.world.keyboard.left || this.world.keyboard.right) {
