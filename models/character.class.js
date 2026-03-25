@@ -6,7 +6,7 @@ class Character extends MoveableObject {
     frameHeight = 128;
     world;
     speed = 5;
-    bottles = 0;
+    arrow = 0;
     coins = 0;
     
     constructor() {
@@ -28,6 +28,9 @@ class Character extends MoveableObject {
         if (this.world.keyboard.up && !this.isAboveGround()) {
             this.jump();
         }
+        if (this.world.keyboard.space) {
+            this.shoot();
+        }
         this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
@@ -39,6 +42,9 @@ class Character extends MoveableObject {
         }
         else if (this.isHurt()) {
             this.loadImage('img/Character/Hurt.png')
+        }
+        else if (this.shoot) {
+            this.loadImage('img/Character/Shot.png')
         }
         else if (this.isAboveGround()) {
             this.loadImage('img/Character/Jump.png');

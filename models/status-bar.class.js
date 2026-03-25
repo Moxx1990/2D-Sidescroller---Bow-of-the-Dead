@@ -1,19 +1,37 @@
 class StatusBar extends DrawableObject {
 
-    IMAGES = [
-        "img/Statusbar/1_statusbar_coin/blue/0.png",
-        "img/Statusbar/1_statusbar_coin/blue/20.png",
-        "img/Statusbar/1_statusbar_coin/blue/40.png",
-        "img/Statusbar/1_statusbar_coin/blue/60.png",
-        "img/Statusbar/1_statusbar_coin/blue/80.png",
-        "img/Statusbar/1_statusbar_coin/blue/100.png"
+    IMAGES_HEALTH = [
+        "img/Statusbar/health/green/0.png",
+        "img/Statusbar/health/green/20.png",
+        "img/Statusbar/health/green/40.png",
+        "img/Statusbar/health/green/60.png",
+        "img/Statusbar/health/green/80.png",
+        "img/Statusbar/health/green/100.png"
+    ];
+
+    IMAGES_COIN = [
+        "img/Statusbar/coin/orange/0.png",
+        "img/Statusbar/coin/orange/20.png",
+        "img/Statusbar/coin/orange/40.png",
+        "img/Statusbar/coin/orange/60.png",
+        "img/Statusbar/coin/orange/80.png",
+        "img/Statusbar/coin/orange/100.png"
+    ];
+
+    IMAGES_BOW = [
+        "img/Statusbar/bow/blue/0.png",
+        "img/Statusbar/bow/blue/20.png",
+        "img/Statusbar/bow/blue/40.png",
+        "img/Statusbar/bow/blue/60.png",
+        "img/Statusbar/bow/blue/80.png",
+        "img/Statusbar/bow/blue/100.png"
     ];
 
     percentage = 100;
 
     constructor() {
         super();
-        this.loadImages(this.IMAGES);
+        this.loadImages(this.IMAGES_HEALTH);
         this.x = 30;
         this.y = 20;
         this.width = 200;
@@ -23,7 +41,7 @@ class StatusBar extends DrawableObject {
 
     setPercentage(percentage) {
         this.percentage = percentage;
-        let path = this.IMAGES[this.resolveImageIndex()];
+        let path = this.IMAGES_HEALTH[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
