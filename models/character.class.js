@@ -28,9 +28,6 @@ class Character extends MoveableObject {
         if (this.world.keyboard.up && !this.isAboveGround()) {
             this.jump();
         }
-        if (this.world.keyboard.space) {
-            this.shoot();
-        }
         this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 

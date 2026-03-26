@@ -1,16 +1,21 @@
 class ThrowableObject extends MoveableObject {
 
-    speedY = 30;
-    speedX = 20;
+    constructor(x, y) {
+        super().loadImage('img/Character/Arrow.png')
+        this.x = x;
+        this.y = y;
+        this.height = 100;
+        this.width = 50;
+        this.shoot();
 
-    constructor() {
-        super();
     }
 
     shoot() {
-        if (this.Character.arrow > 0) {
-            
-        }
+        this.speedY = 15;
+        this.applyGravity();
+        setInterval( () => {
+            this.x += 25;
+        }, 25);
     }
     
 
