@@ -27,6 +27,20 @@
     <canvas id="canvas" width="720" height="480">
     </canvas>
     </div>
+    <div id="hud">
+        <div class="panel">
+            <button onclick="tooglePause()">Pause</button>
+            <button onclick="toggleMute()">Mute</button>
+            <button onclick="restart()">Restart</button>            
+        </div>
+        <div class="panel">
+            <button id="btnLeft">Left</button>
+            <button id="btnRight">Right</button>
+            <button id="btnUp">Jump</button>
+            <button id="btnDown">Down</button>
+            <button id="btnSpace">Shoot</button>
+        </div>
+    </div>
     <button onclick="openFullscreen()">Fullscreen</button>
 </body>
 </html>
