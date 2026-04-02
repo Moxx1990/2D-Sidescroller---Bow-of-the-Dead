@@ -6,7 +6,8 @@ let keyboard = new Keyboard();
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-    bindBtsPressEvents();
+    buttonPressedEvents();
+    buttonUnpressedEvents();
 };
 
 window.addEventListener("keydown", (e) => {
@@ -45,45 +46,40 @@ window.addEventListener("keyup", (e) => {
     }
 });
 
-function bindBtsPressEvents() {
+function buttonPressedEvents() {
     document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.left = true;
-    });
-    document.getElementById("btnLeft").addEventListener("touchend", (e) => {
-        e.preventDefault();
-        keyboard.left = false;
     });
     document.getElementById("btnRight").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.right = true;
     });
-    document.getElementById("btnRight").addEventListener("touchend", (e) => {
-        e.preventDefault();
-        keyboard.right = false;
-    });
     document.getElementById("btnUp").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.up = true;
-    });
-    document.getElementById("btnUp").addEventListener("touchend", (e) => {
-        e.preventDefault();
-        keyboard.up = false;
-    });
-    document.getElementById("btnDown").addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        keyboard.down = true;
-    });
-    document.getElementById("btnDown").addEventListener("touchend", (e) => {
-        e.preventDefault();
-        keyboard.down = false;
     });
     document.getElementById("btnSpace").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.space = true;
     });
+};
+
+function buttonUnpressedEvents() {
+    document.getElementById("btnLeft").addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.left = false;
+    });
+    document.getElementById("btnRight").addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.right = false;
+    });
+    document.getElementById("btnUp").addEventListener("touchend", (e) => {
+        e.preventDefault();
+        keyboard.up = false;
+    });
     document.getElementById("btnSpace").addEventListener("touchend", (e) => {
         e.preventDefault();
         keyboard.space = false;
     });
-};
+}

@@ -96,4 +96,8 @@ throwableObjects = [];
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+
+    clearAllIntervals() {
+        for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    }
 }

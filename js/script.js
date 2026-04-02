@@ -1,6 +1,3 @@
-
-
-/* View in fullscreen */
 function openFullscreen() {
     let elem = document.getElementById('game');
     if (elem.requestFullscreen) {
@@ -12,7 +9,6 @@ function openFullscreen() {
     }
 }
 
-/* Close fullscreen */
 function closeFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
