@@ -29,6 +29,7 @@
     </div>
     <div id="hud">
         <div class="panel">
+            <button onclick="showControlls()">How to play</button>
             <button onclick="tooglePause()">Pause</button>
             <button onclick="toggleMute()">Mute</button>
             <button onclick="restart()">Restart</button>            
@@ -41,5 +42,10 @@
         </div>
     </div>
     <button onclick="openFullscreen()">Fullscreen</button>
+    <div id="controlls" class="controlls">
+            <h2>How to play</h2>
+            <p>Use the arrow keys to move and jump, and the space bar to shoot. Defeat all enemies to win!</p>
+            <button onclick="closeControlls()">Close</button>
+    </div>
 </body>
 </html>

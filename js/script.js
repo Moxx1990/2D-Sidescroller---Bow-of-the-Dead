@@ -18,3 +18,7 @@ function closeFullscreen() {
     document.msExitFullscreen();
   }
 }
+
+function showControlls() {
+  
+}
