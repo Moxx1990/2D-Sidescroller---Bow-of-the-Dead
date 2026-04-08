@@ -9,6 +9,7 @@ class Character extends MoveableObject {
     arrow = 0;
     coins = 0;
     
+    
     constructor() {
         super();
         this.loadImage('img/Character/Idle.png');

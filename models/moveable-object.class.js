@@ -6,6 +6,10 @@ class MoveableObject extends DrawableObject {
     accelaration = 2.5;
     energy = 100;
     lastHit = 0;
+    offsetLeft = 35;
+    offsetRight = 35;
+    offsetTop = 10;
+    offsetBottom = 10;
 
     loadImage(path) {
         this.img = new Image();
@@ -62,10 +66,12 @@ class MoveableObject extends DrawableObject {
     }
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x + mo.width &&
-            this.y < mo.y + mo.height;
+        return (
+            this.x + this.width - this.offsetRight > mo.x + mo.offsetLeft &&
+            this.y + this.height - this.offsetBottom > mo.y + mo.offsetTop &&
+            this.x + this.offsetLeft < mo.x + mo.width - mo.offsetRight &&
+            this.y + this.offsetTop < mo.y + mo.height - mo.offsetBottom
+        );
     }
 
     isDead() {

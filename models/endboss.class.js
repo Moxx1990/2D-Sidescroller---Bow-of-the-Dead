@@ -11,6 +11,10 @@ class Endboss extends MoveableObject {
 
     constructor() {
         super();
+        this.offsetLeft = 130;
+        this.offsetRight = 130;
+        this.offsetTop = 100;
+        this.offsetBottom = 20;
         this.loadImage('img/Enemy/Basic/Walk.png');
         this.x = 2050
         this.speed = 0.15;
