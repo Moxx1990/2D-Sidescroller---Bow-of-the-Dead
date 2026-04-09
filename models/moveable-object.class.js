@@ -12,9 +12,9 @@ class MoveableObject extends DrawableObject {
     offsetBottom = 10;
     currentFrame = 0;
     currentWalkFrame = 0;
-    totalWalkFrames = 1; // Standardwert
+    totalWalkFrames = 1;
     currentDeathFrame = 0;
-    totalDeathFrames = 1; // Standardwert
+    totalDeathFrames = 1;
 
     loadImage(path) {
         this.img = new Image();
@@ -52,16 +52,13 @@ class MoveableObject extends DrawableObject {
         this.otherDirection = true;
     }
 
-playEnemyAnimation() {
-        // 1. Intervall für Bewegung (schneller, 60 FPS)
+    playEnemyAnimation() {
         setInterval(() => {
             if (!this.isDead()) {
                 this.moveLeft();
             }
-            // Wenn tot, wird nicht mehr bewegt.
         }, 1000 / 60);
 
-        // 2. Intervall für Bildwechsel (langsamer, ca. 6.7 FPS)
         setInterval(() => {
             if (this.isDead()) {
                 this.animateDeath();
@@ -72,19 +69,16 @@ playEnemyAnimation() {
     }
 
     animateWalk() {
-        // Laufen loopen
         this.currentWalkFrame = (this.currentWalkFrame + 1) % this.totalWalkFrames;
-        // WICHTIG: Setze this.currentFrame für die draw() Methode
         this.currentFrame = this.currentWalkFrame;
     }
 
-animateDeath() {
+    animateDeath() {
         if (this.currentDeathFrame < this.totalDeathFrames - 1) {
             this.currentDeathFrame++;
         }
         this.currentFrame = this.currentDeathFrame;
     }
-
 
     moveRight() {
         this.x += this.speed;
@@ -122,5 +116,4 @@ animateDeath() {
         timepassed = timepassed / 1000;
         return timepassed < 0.5;
     }
-
 }

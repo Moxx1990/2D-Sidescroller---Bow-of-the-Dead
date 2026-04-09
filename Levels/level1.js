@@ -9,10 +9,6 @@ const level1 = new Level(
     ], 
 
     [
-    new Cloud(),
-    ], 
-
-    [
     new BackGroundObject('img/Background/Sky.png', -720, 0),
     new BackGroundObject('img/Background/Clouds.png', -720, 0),
     new BackGroundObject('img/Background/Mountain_Back.png', -720, 0),

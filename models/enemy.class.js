@@ -24,9 +24,9 @@ class Enemy extends MoveableObject {
         this.playEnemyAnimation();
     }
 
-animateDeath() {
-        this.img = this.deathSheet; // Bild direkt tauschen ohne neu zu laden
-        super.animateDeath(); // Restliche Logik aus MoveableObject nutzen
+    animateDeath() {
+        this.img = this.deathSheet;
+        super.animateDeath();
     }
 
     hit() {
