@@ -3,8 +3,10 @@ class Enemy extends MoveableObject {
     height = 150;
     width = 200;
     
-    currentFrame = 0;
-    totalFrames = 6;
+    currentWalkFrame = 0;
+    totalWalkFrames = 6;
+    currentDeathFrame = 0;
+    totalDeathFrames = 5;
     frameWidth = 128;
     frameHeight = 128;
 
@@ -12,13 +14,25 @@ class Enemy extends MoveableObject {
         super();
         this.offsetLeft = 110;
         this.offsetRight = 110;
-        this.offsetTop = 100;
+        this.offsetTop = 80;
         this.offsetBottom = 20;
         this.loadImage('img/Enemy/Basic/Walk.png');
-        this.x = 600 + Math.random() * 500;
+        this.deathSheet = new Image();
+        this.deathSheet.src = 'img/Enemy/Basic/Dead.png';
+        this.x = 700 + Math.random() * 1000;
         this.speed = 0.15 + Math.random() * 0.25;
         this.playEnemyAnimation();
     }
+
+animateDeath() {
+        this.img = this.deathSheet; // Bild direkt tauschen ohne neu zu laden
+        super.animateDeath(); // Restliche Logik aus MoveableObject nutzen
+    }
+
+    hit() {
+        this.energy -= 1;
+    }
+
 
     getFrameX() {
         return this.currentFrame * this.frameWidth;

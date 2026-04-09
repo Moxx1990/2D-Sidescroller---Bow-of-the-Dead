@@ -6,7 +6,7 @@ class ThrowableObject extends MoveableObject {
         this.x = x;
         this.y = y;
         this.height = 100;
-        this.width = 50;
+        this.width = 100;
         this.shoot();
 
     }

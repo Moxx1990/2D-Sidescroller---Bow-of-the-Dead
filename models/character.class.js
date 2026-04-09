@@ -33,6 +33,10 @@ class Character extends MoveableObject {
     }
 }
 
+    bounce() {
+    this.speedY = 25;
+    }
+
    animate() {
 
     setInterval(() => {
