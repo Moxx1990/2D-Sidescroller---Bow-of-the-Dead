@@ -1,5 +1,6 @@
 class ThrowableObject extends MoveableObject {
 
+
     constructor(x, y) {
         super().loadImage('img/Character/Arrow.png')
         this.x = x;

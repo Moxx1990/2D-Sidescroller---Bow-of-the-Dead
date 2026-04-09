@@ -25,7 +25,7 @@ throwableObjects = [];
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowobjects();
+            this.checkArrowCollisions();
         }, 200);
     }
 
@@ -38,11 +38,22 @@ throwableObjects = [];
             }); 
     }
 
-    checkThrowobjects() {
-        if(this.keyboard.space) {
-            let arrow = new ThrowableObject(this.character.x + 120, this.character.y + 40);
-            this.throwableObjects.push(arrow);
-        }
+    checkArrowCollisions() {
+        this.throwableObjects.forEach((arrow, arrowIndex) => {
+
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+
+                if (arrow.isColliding(enemy)) {
+                    enemy.energy--;
+
+                    this.throwableObjects.splice(arrowIndex, 1);
+
+                    if (enemy.energy <= 0) {
+                        this.level.enemies.splice(enemyIndex, 1);
+                    }
+                }
+            });
+        });
     }
 
     draw() {

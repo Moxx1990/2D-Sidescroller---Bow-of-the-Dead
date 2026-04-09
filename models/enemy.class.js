@@ -1,5 +1,5 @@
 class Enemy extends MoveableObject {
-
+    energy = 1;
     height = 150;
     width = 200;
     

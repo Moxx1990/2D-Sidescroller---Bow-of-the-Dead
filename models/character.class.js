@@ -8,14 +8,30 @@ class Character extends MoveableObject {
     speed = 5;
     arrow = 0;
     coins = 0;
+    canThrow = true;
     
     
     constructor() {
         super();
         this.loadImage('img/Character/Idle.png');
         this.applyGravity();
+        this.arrow = 3;
         this.animate();
     }
+
+    throwArrow() {
+    console.log('Vor dem Schuss:', this.arrow);
+
+    if (this.arrow > 0) {
+        let arrow = new ThrowableObject(this.x + 50, this.y + 50);
+        this.world.throwableObjects.push(arrow);
+        this.arrow--;
+
+        console.log('Nach dem Schuss:', this.arrow);
+    } else {
+        console.log('Keine Pfeile mehr');
+    }
+}
 
    animate() {
 
@@ -29,6 +45,14 @@ class Character extends MoveableObject {
         if (this.world.keyboard.up && !this.isAboveGround()) {
             this.jump();
         }
+        if (this.world.keyboard.space && this.canThrow) {
+                this.throwArrow();
+                this.canThrow = false;
+            }
+
+            if (!this.world.keyboard.space) {
+                this.canThrow = true;
+            }
         this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
