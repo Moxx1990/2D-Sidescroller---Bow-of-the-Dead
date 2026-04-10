@@ -9,6 +9,8 @@ class Character extends MoveableObject {
     arrow = 0;
     coins = 0;
     canThrow = true;
+    walking_sound = new Audio('audio/running.mp3');
+    shooting_sound = new Audio('audio/shoot.mp3');
     
     
     constructor() {
@@ -20,26 +22,30 @@ class Character extends MoveableObject {
     }
 
     throwArrow() {
-    console.log('Vor dem Schuss:', this.arrow);
+        if (this.arrow > 0) {
+            this.shooting_sound.pause();
+            this.shooting_sound.currentTime = 0;
+            this.shooting_sound.play();
 
-    if (this.arrow > 0) {
-        let arrow = new ThrowableObject(this.x + 50, this.y + 50);
-        this.world.throwableObjects.push(arrow);
-        this.arrow--;
-
-        console.log('Nach dem Schuss:', this.arrow);
-    } else {
-        console.log('Keine Pfeile mehr');
+            let arrow = new ThrowableObject(this.x + 50, this.y + 50);
+            this.world.throwableObjects.push(arrow);
+            this.arrow--;
+        }
     }
-}
 
     bounce() {
     this.speedY = 25;
     }
 
    animate() {
-
     setInterval(() => {
+        this.walking_sound.pause();
+        if (this.world.keyboard.right || this.world.keyboard.left) {
+            this.world.background_music.play();
+            if (!this.isAboveGround()) {
+                this.walking_sound.play();
+            }
+        }
         if (this.world.keyboard.left && this.x > 0) {
             this.moveLeft();
         }
@@ -53,7 +59,6 @@ class Character extends MoveableObject {
                 this.throwArrow();
                 this.canThrow = false;
             }
-
             if (!this.world.keyboard.space) {
                 this.canThrow = true;
             }

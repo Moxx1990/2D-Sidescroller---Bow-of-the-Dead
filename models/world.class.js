@@ -8,6 +8,7 @@ keyboard;
 camera_x = 0;
 statusBar = new StatusBar();
 throwableObjects = [];
+background_music = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard) {
         this.canvas = canvas;
@@ -16,6 +17,7 @@ throwableObjects = [];
         this.draw();
         this.setWorld();
         this.run();
+        this.playBackgroundMusic();
     }
 
     setWorld() {
@@ -27,6 +29,12 @@ throwableObjects = [];
             this.checkCollisions();
             this.checkArrowCollisions();
         }, 50);
+    }
+
+    playBackgroundMusic() {
+        this.background_music.loop = true; // Musik soll sich wiederholen
+        this.background_music.volume = 0.2; // Etwas leiser, damit Sounds hörbar bleiben
+        this.background_music.play();
     }
 
     checkCollisions() {
