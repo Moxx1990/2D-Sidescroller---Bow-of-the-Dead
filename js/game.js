@@ -5,10 +5,37 @@ let keyboard = new Keyboard();
 
 function init() {
     canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard);
     buttonPressedEvents();
     buttonUnpressedEvents();
 };
+
+function startGame() {
+    initLevel(); // Erstellt das Level-Objekt level1
+    
+    // Startbildschirm ausblenden
+    let startScreen = document.getElementById('startScreen');
+    if (startScreen) {
+        startScreen.classList.add('d-none');
+    }
+
+    // Welt erstellen und level1 mitgeben
+    canvas = document.getElementById('canvas');
+    world = new World(canvas, keyboard, level1);
+    
+    console.log("Welt gestartet mit Level:", level1);
+}
+
+function restart() {
+    startGame();
+}
+
+function showControlls() {
+    document.getElementById('controlls').classList.remove('d-none');
+}
+
+function closeControlls() {
+    document.getElementById('controlls').classList.add('d-none');
+}
 
 window.addEventListener("keydown", (e) => {
     if (e.key == "ArrowLeft") {
@@ -49,37 +76,29 @@ window.addEventListener("keyup", (e) => {
 function buttonPressedEvents() {
     document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
         e.preventDefault();
-        keyboard.left = true;
-    });
+        keyboard.left = true;});
     document.getElementById("btnRight").addEventListener("touchstart", (e) => {
         e.preventDefault();
-        keyboard.right = true;
-    });
+        keyboard.right = true;});
     document.getElementById("btnUp").addEventListener("touchstart", (e) => {
         e.preventDefault();
-        keyboard.up = true;
-    });
+        keyboard.up = true;});
     document.getElementById("btnSpace").addEventListener("touchstart", (e) => {
         e.preventDefault();
-        keyboard.space = true;
-    });
+        keyboard.space = true;});
 };
 
 function buttonUnpressedEvents() {
     document.getElementById("btnLeft").addEventListener("touchend", (e) => {
         e.preventDefault();
-        keyboard.left = false;
-    });
+        keyboard.left = false;});
     document.getElementById("btnRight").addEventListener("touchend", (e) => {
         e.preventDefault();
-        keyboard.right = false;
-    });
+        keyboard.right = false;});
     document.getElementById("btnUp").addEventListener("touchend", (e) => {
         e.preventDefault();
-        keyboard.up = false;
-    });
+        keyboard.up = false;});
     document.getElementById("btnSpace").addEventListener("touchend", (e) => {
         e.preventDefault();
-        keyboard.space = false;
-    });
+        keyboard.space = false;});
 }

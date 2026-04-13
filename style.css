@@ -19,6 +19,30 @@ body {
 canvas {
     background-color: black;
     display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.canvas-wrapper {
+    position: relative;
+    width: 720px;
+    height: 480px;
+    border: 4px solid #333; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
 }
 
 h1 {
@@ -38,12 +62,111 @@ button {
 }
 
 .game {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.start-screen {
+    position: absolute;
+    top: 110px; 
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
 
+.start-screen img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.start-screen button {
+    position: relative;
+    z-index: 11;
+    font-size: 32px;
+    padding: 20px 40px;
+    background-color: #8b0000;
+    border: 2px solid white;
+    transition: transform 0.1s ease;
+}
+
+.start-screen button:hover {
+    transform: scale(1.1);
+    background-color: #ff0000;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.menu-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 20;
+}
+
+.btn-main {
+    font-size: 32px !important;
+    background-color: #8b0000 !important;
+    padding: 15px 40px !important;
+    border: 2px solid white !important;
+}
+
+.btn-sub {
+    font-size: 20px !important;
+    background-color: #333 !important;
+}
+
+.controlls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 720px;
+    height: 480px;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30; 
+}
+
+.controlls-content {
+    background-image: url('img/site/paper_texture.png');
+    background-color: #1a1a1a;
+    border: 3px solid #8b0000;
+    padding: 20px;
+    width: 80%;
+    max-width: 500px;
+    color: white;
+    box-shadow: inset 0 0 15px #000;
+}
+
+.instruction-grid p {
+    margin: 10px 0;
+    font-size: 20px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+}
+
+.flavor-text {
+    color: #ff4500;
+    margin-top: 15px;
+    font-style: italic;
+}
+
+.btn-close {
+    margin-top: 20px;
+    background-color: #555;
+}
 
 @media only screen and (max-width: 720px) {
     canvas {

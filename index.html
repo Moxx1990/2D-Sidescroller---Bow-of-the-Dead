@@ -21,14 +21,32 @@
     <title>Document</title>
 </head>
 <body onload="init()">
-    <div class="game" id="game">
+<div class="game" id="game">
     <h1>Bow of the Dead</h1>
-    <canvas id="canvas" width="720" height="480">
-    </canvas>
+    <div class="canvas-wrapper">
+        <div id="startScreen" class="overlay">
+            <div class="menu-container">
+                <button class="btn-main" onclick="startGame()">Start Game</button>
+                <button class="btn-sub" onclick="showControlls()">How to play</button>
+            </div>
+        </div>
+        <div id="controlls" class="overlay d-none">
+            <div class="controlls-content">
+                <h2>How to play</h2>
+                <div class="instruction-grid">
+                    <p><b>Move:</b> Left / Right Arrows</p>
+                    <p><b>Jump:</b> Up Arrow</p>
+                    <p><b>Shoot:</b> Space Bar</p>
+                </div>
+                <p class="flavor-text">Defeat all enemies to win!</p>
+                <button class="btn-close" onclick="closeControlls()">Close</button>
+            </div>
+        </div>
+        <canvas id="canvas" width="720" height="480"></canvas>
     </div>
+</div>
     <div id="hud">
         <div class="panel">
-            <button onclick="showControlls()">How to play</button>
             <button onclick="tooglePause()">Pause</button>
             <button onclick="toggleMute()">Mute</button>
             <button onclick="restart()">Restart</button>            
@@ -41,10 +59,5 @@
         </div>
     </div>
     <button onclick="openFullscreen()">Fullscreen</button>
-    <div id="controlls" class="controlls">
-            <h2>How to play</h2>
-            <p>Use the arrow keys to move and jump, and the space bar to shoot. Defeat all enemies to win!</p>
-            <button onclick="closeControlls()">Close</button>
-    </div>
 </body>
 </html>

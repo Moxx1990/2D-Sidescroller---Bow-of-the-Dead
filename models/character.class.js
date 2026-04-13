@@ -26,12 +26,10 @@ class Character extends MoveableObject {
             this.shooting_sound.pause();
             this.shooting_sound.currentTime = 0;
             this.shooting_sound.play();
-
             let arrow = new ThrowableObject(this.x + 50, this.y + 50);
             this.world.throwableObjects.push(arrow);
             this.arrow--;
-        }
-    }
+        }}
 
     bounce() {
     this.speedY = 25;
