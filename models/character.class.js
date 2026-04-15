@@ -16,6 +16,8 @@ class Character extends MoveableObject {
     constructor() {
         super();
         this.loadImage('img/Character/Idle.png');
+        this.hurtSheet = new Image();
+        this.hurtSheet.src = 'img/Character/Hurt.png';
         this.applyGravity();
         this.arrow = 3;
         this.animate();
@@ -53,13 +55,13 @@ class Character extends MoveableObject {
         if (this.world.keyboard.up && !this.isAboveGround()) {
             this.jump();
         }
-        if (this.world.keyboard.space && this.canThrow) {
-                this.throwArrow();
-                this.canThrow = false;
-            }
-            if (!this.world.keyboard.space) {
-                this.canThrow = true;
-            }
+      if (this.world.keyboard.space && this.canThrow && this.arrow > 0) {
+    this.throwArrow();
+    this.canThrow = false; 
+    setTimeout(() => {
+        this.canThrow = true;
+    }, 500); 
+}
         this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
@@ -70,7 +72,8 @@ class Character extends MoveableObject {
             this.loadImage('img/Character/Dead.png')
         }
         else if (this.isHurt()) {
-            this.loadImage('img/Character/Hurt.png')
+            this.currentFrame = (this.currentFrame + 1) % 3;
+            this.img = this.hurtSheet;
         }
         else if (this.shoot) {
             this.loadImage('img/Character/Shot.png')
