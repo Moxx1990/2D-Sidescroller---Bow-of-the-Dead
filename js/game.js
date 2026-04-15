@@ -10,23 +10,19 @@ function init() {
 };
 
 function startGame() {
-    initLevel(); // Erstellt das Level-Objekt level1
-    
-    // Startbildschirm ausblenden
+    initLevel();
     let startScreen = document.getElementById('startScreen');
     if (startScreen) {
         startScreen.classList.add('d-none');
     }
-
-    // Welt erstellen und level1 mitgeben
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
-    
-    console.log("Welt gestartet mit Level:", level1);
 }
 
-function restart() {
-    startGame();
+function restartGame() {
+    document.getElementById('gameOverScreen').classList.add('d-none');
+    initLevel(); 
+    world = new World(canvas, keyboard, level1);
 }
 
 function showControlls() {

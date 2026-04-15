@@ -11,13 +11,19 @@ class Character extends MoveableObject {
     canThrow = true;
     walking_sound = new Audio('audio/running.mp3');
     shooting_sound = new Audio('audio/shoot.mp3');
+    deathAnimationStarted = false;
     
     
     constructor() {
         super();
+        this.deathAnimationStarted = false;
+        this.currentFrame = 0;
+        this.deadSoundPlayed = false;
         this.loadImage('img/Character/Idle.png');
         this.hurtSheet = new Image();
         this.hurtSheet.src = 'img/Character/Hurt.png';
+        this.deathSheet = new Image();
+        this.deathSheet.src = 'img/Character/Dead.png';
         this.applyGravity();
         this.arrow = 3;
         this.animate();
@@ -37,57 +43,70 @@ class Character extends MoveableObject {
     this.speedY = 25;
     }
 
-   animate() {
+animate() {
     setInterval(() => {
-        this.walking_sound.pause();
-        if (this.world.keyboard.right || this.world.keyboard.left) {
-            this.world.background_music.play();
-            if (!this.isAboveGround()) {
-                this.walking_sound.play();
+        if (!this.isDead()) {
+            this.walking_sound.pause();
+            
+            if (this.world.keyboard.right || this.world.keyboard.left) {
+                this.world.background_music.play();
+                if (!this.isAboveGround()) {
+                    this.walking_sound.play();
+                }
             }
+            if (this.world.keyboard.left && this.x > 0) {
+                this.moveLeft();
+            }
+            if (this.world.keyboard.right && this.x < this.world.level.level_end_x) {
+                this.moveRight();
+            }
+            if (this.world.keyboard.up && !this.isAboveGround()) {
+                this.jump();
+            }
+            if (this.world.keyboard.space && this.canThrow && this.arrow > 0) {
+                this.throwArrow();
+                this.canThrow = false; 
+                setTimeout(() => {
+                    this.canThrow = true;
+                }, 500); 
+            }
+        } else {
+            this.walking_sound.pause();
         }
-        if (this.world.keyboard.left && this.x > 0) {
-            this.moveLeft();
-        }
-        if (this.world.keyboard.right && this.x < this.world.level.level_end_x) {
-            this.moveRight();
-        }
-        if (this.world.keyboard.up && !this.isAboveGround()) {
-            this.jump();
-        }
-      if (this.world.keyboard.space && this.canThrow && this.arrow > 0) {
-    this.throwArrow();
-    this.canThrow = false; 
-    setTimeout(() => {
-        this.canThrow = true;
-    }, 500); 
-}
         this.world.camera_x = -this.x + 100;
     }, 1000 / 60);
 
-
-    setInterval(() => {
+setInterval(() => {
+    if (this.isDead()) {
+        if (!this.deathAnimationStarted) {
+            this.currentFrame = 0; 
+            this.deathAnimationStarted = true;
+            let gameOverSound = new Audio('audio/gameOver.mp3');
+            gameOverSound.play();
+        }
+        this.img = this.deathSheet;
+        if (this.currentFrame < 4) {
+            this.currentFrame++;
+        } 
+    }
+    else if (this.isHurt()) {
+        this.img = this.hurtSheet;
+        this.currentFrame = (this.currentFrame + 1) % 3;
+    }
+    else if (this.isAboveGround()) {
+        this.loadImage('img/Character/Jump.png');
+        this.currentFrame = 0;
+    }
+    else if (this.world.keyboard.left || this.world.keyboard.right) {
+        this.loadImage('img/Character/Run.png');
         this.currentFrame = (this.currentFrame + 1) % this.totalFrames;
-        if (this.isDead()) {
-            this.loadImage('img/Character/Dead.png')
-        }
-        else if (this.isHurt()) {
-            this.currentFrame = (this.currentFrame + 1) % 3;
-            this.img = this.hurtSheet;
-        }
-        else if (this.shoot) {
-            this.loadImage('img/Character/Shot.png')
-        }
-        else if (this.isAboveGround()) {
-            this.loadImage('img/Character/Jump.png');
-        }
-        else if (this.world.keyboard.left || this.world.keyboard.right) {
-            this.loadImage('img/Character/Run.png');
-        }
-        else {
-            this.loadImage('img/Character/Idle.png');
-        }
-    }, 120);
+    }
+    else {
+        this.loadImage('img/Character/Idle.png');
+        this.currentFrame = 0;
+        this.deathAnimationStarted = false;
+    }
+}, 120);
 }
 
     getFrameX() {

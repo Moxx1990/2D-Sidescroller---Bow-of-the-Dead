@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="/img/site/favicon.png">
     <script src="js/script.js"></script>
     <script src="models/drawable-object.class.js"></script>
     <script src="models/status-bar.class.js"></script>
@@ -18,7 +19,7 @@
     <script src="models/throwable-object.class.js"></script>
     <script src="models/world.class.js"></script>
     <script src="js/game.js"></script>
-    <title>Document</title>
+    <title>Bow of the Dead</title>
 </head>
 <body onload="init()">
 <div class="game" id="game">
@@ -43,13 +44,19 @@
             </div>
         </div>
         <canvas id="canvas" width="720" height="480"></canvas>
+        <div id="gameOverScreen" class="overlay d-none">
+    <div class="menu-container">
+        <h2 style="color: #8b0000; font-size: 48px;">GAME OVER</h2>
+        <button class="btn-main" onclick="restartGame()">Try Again</button>
+    </div>
+</div>
     </div>
 </div>
     <div id="hud">
         <div class="panel">
             <button onclick="tooglePause()">Pause</button>
             <button onclick="toggleMute()">Mute</button>
-            <button onclick="restart()">Restart</button>            
+            <button onclick="restartGame()">Restart</button>            
         </div>
         <div class="panel">
             <button id="btnLeft">Left</button>

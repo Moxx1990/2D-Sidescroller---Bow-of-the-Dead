@@ -30,6 +30,7 @@ background_music = new Audio('audio/music.mp3');
         if (this.level && this.level.enemies) {
             this.checkCollisions();
             this.checkArrowCollisions();
+            this.checkGameOver();
         }
     }, 1000 / 60);
 }
@@ -91,6 +92,21 @@ checkThrowObjects() {
         }, 150);
     }
 
+checkGameOver() {
+    if (this.character.energy <= 0 && !this.gameOverTriggered) {
+        this.gameOverTriggered = true; // Blockiert weitere Aufrufe
+
+        // Hintergrundmusik sofort leiser machen oder stoppen
+        this.background_music.pause();
+
+        // 1.5 Sekunden warten, dann erst einfrieren und Screen zeigen
+        setTimeout(() => {
+            this.clearAllIntervals();
+            document.getElementById('gameOverScreen').classList.remove('d-none');
+        }, 1500); 
+    }
+}
+
 draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
@@ -109,7 +125,7 @@ draw() {
     requestAnimationFrame(function() {
         self.draw();
     });
-}
+    }
 
     addObjectsToMap(objects) {
         objects.forEach(o => {
