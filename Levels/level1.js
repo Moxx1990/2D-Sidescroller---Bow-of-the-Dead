@@ -52,6 +52,12 @@ function initLevel() {
     new BackGroundObject('img/Background/BackgroundTrees.png', 720*3, 0),
     new BackGroundObject('img/Background/House.png', 720*3, 0),
     new BackGroundObject('img/Background/Ground.png', 720*3, 0),
-    ]
+    ], 
+
+     [
+        new CollectibleArrow(500, 300),
+        new CollectibleArrow(800, 100),
+        new CollectibleArrow(1400, 200)
+    ],
 );
 }

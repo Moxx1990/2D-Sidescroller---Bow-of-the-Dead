@@ -1,14 +1,16 @@
 class World {
 
 character = new Character();
-level;
-canvas;
-ctx;
-keyboard;
-camera_x = 0;
-statusBar = new StatusBar();
-throwableObjects = [];
-background_music = new Audio('audio/music.mp3');
+    level;
+    canvas;
+    ctx;
+    keyboard;
+    camera_x = 0;
+    statusBar = new StatusBar();
+    arrowAmount = new ArrowAmount();
+    collectibleArrows = [];
+    throwableObjects = [];
+    background_music = new Audio('audio/music.mp3');
 
     constructor(canvas, keyboard, level) {
         this.ctx = canvas.getContext('2d');
@@ -31,6 +33,7 @@ background_music = new Audio('audio/music.mp3');
             this.checkCollisions();
             this.checkArrowCollisions();
             this.checkGameOver();
+            this.checkArrowPickups();
         }
     }, 1000 / 60);
 }
@@ -56,6 +59,16 @@ checkCollisions() {
                     this.statusBar.setPercentage(this.character.energy);
                 }
             }
+        }
+    });
+}
+
+checkArrowPickups() {
+    this.level.collectibleArrows.forEach((arrow, index) => {
+        if (this.character.isColliding(arrow)) {
+            this.character.arrow++;
+            this.arrowAmount.setArrows(this.character.arrow);
+            this.level.collectibleArrows.splice(index, 1);
         }
     });
 }
@@ -94,12 +107,8 @@ checkThrowObjects() {
 
 checkGameOver() {
     if (this.character.energy <= 0 && !this.gameOverTriggered) {
-        this.gameOverTriggered = true; // Blockiert weitere Aufrufe
-
-        // Hintergrundmusik sofort leiser machen oder stoppen
+        this.gameOverTriggered = true;
         this.background_music.pause();
-
-        // 1.5 Sekunden warten, dann erst einfrieren und Screen zeigen
         setTimeout(() => {
             this.clearAllIntervals();
             document.getElementById('gameOverScreen').classList.remove('d-none');
@@ -111,6 +120,7 @@ draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgrounds);
+    this.addObjectsToMap(this.level.collectibleArrows);
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.level.enemies);
@@ -121,6 +131,8 @@ draw() {
     if (this.statusBar) {
         this.addToMap(this.statusBar);
     }
+    // Hier wird die Zahl auf dem Bildschirm gezeichnet
+this.addToMap(this.arrowAmount);
     let self = this;
     requestAnimationFrame(function() {
         self.draw();

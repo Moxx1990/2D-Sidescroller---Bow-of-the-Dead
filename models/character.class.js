@@ -37,6 +37,7 @@ class Character extends MoveableObject {
             let arrow = new ThrowableObject(this.x + 50, this.y + 50);
             this.world.throwableObjects.push(arrow);
             this.arrow--;
+            this.world.arrowAmount.setArrows(this.arrow);
         }}
 
     bounce() {
