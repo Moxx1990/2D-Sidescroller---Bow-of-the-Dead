@@ -13,9 +13,9 @@ class Enemy extends MoveableObject {
     constructor() {
         super();
         this.offsetLeft = 110;
-        this.offsetRight = 110;
-        this.offsetTop = 80;
-        this.offsetBottom = 20;
+        this.offsetRight = 120;
+        this.offsetTop = 75;
+        this.offsetBottom = 5;
         this.loadImage('img/Enemy/Basic/Walk.png');
         this.deathSheet = new Image();
         this.deathSheet.src = 'img/Enemy/Basic/Dead.png';

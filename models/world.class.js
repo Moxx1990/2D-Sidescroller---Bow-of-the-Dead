@@ -19,6 +19,7 @@ character = new Character();
         this.level = level;
         this.setWorld();     
         this.run();
+        this.sakeAmount = new SakeAmount();
         this.draw();
         this.playBackgroundMusic();
     }
@@ -34,6 +35,7 @@ character = new Character();
             this.checkArrowCollisions();
             this.checkGameOver();
             this.checkArrowPickups();
+            this.checkSakeCollisions();
         }
     }, 1000 / 60);
 }
@@ -116,11 +118,27 @@ checkGameOver() {
     }
 }
 
+checkSakeCollisions() {
+    this.level.sakes.forEach((sake, index) => {
+        if (this.character.isColliding(sake)) {
+            this.character.sake += 1; // Variable im Character muss vorhanden sein
+            this.sakeAmount.setSake(this.character.sake); // Anzeige updaten
+            this.level.sakes.splice(index, 1); // Flasche aus der Welt entfernen
+            
+            // Optional: Sound abspielen
+            // this.collect_sound.play();
+        }
+    });
+}
+
 draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.camera_x, 0);
     this.addObjectsToMap(this.level.backgrounds);
     this.addObjectsToMap(this.level.collectibleArrows);
+    if (this.level.sakes) {
+        this.addObjectsToMap(this.level.sakes); 
+    }
     this.addToMap(this.character);
     this.addObjectsToMap(this.throwableObjects);
     this.addObjectsToMap(this.level.enemies);
@@ -133,6 +151,7 @@ draw() {
     }
     // Hier wird die Zahl auf dem Bildschirm gezeichnet
 this.addToMap(this.arrowAmount);
+this.addToMap(this.sakeAmount);
     let self = this;
     requestAnimationFrame(function() {
         self.draw();

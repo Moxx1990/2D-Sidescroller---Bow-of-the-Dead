@@ -7,7 +7,7 @@ class Character extends MoveableObject {
     world;
     speed = 5;
     arrow = 0;
-    coins = 0;
+    sake = 0;
     canThrow = true;
     walking_sound = new Audio('audio/running.mp3');
     shooting_sound = new Audio('audio/shoot.mp3');
@@ -24,6 +24,10 @@ class Character extends MoveableObject {
         this.hurtSheet.src = 'img/Character/Hurt.png';
         this.deathSheet = new Image();
         this.deathSheet.src = 'img/Character/Dead.png';
+        this.offsetLeft = 55;
+        this.offsetRight = 55;
+        this.offsetTop = 60;
+        this.offsetBottom = 10;
         this.applyGravity();
         this.arrow = 3;
         this.animate();
@@ -42,6 +46,7 @@ class Character extends MoveableObject {
 
     bounce() {
     this.speedY = 25;
+    this.currentFrame = 0;
     }
 
 animate() {

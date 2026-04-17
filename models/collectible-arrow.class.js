@@ -10,6 +10,10 @@ class CollectibleArrow extends MoveableObject {
         super().loadImage('img/Character/Arrow.png');
         this.x = x;
         this.y = y;
+       this.offsetLeft = 15;
+        this.offsetRight = 15;
+        this.offsetTop = 15;
+        this.offsetBottom = 15;
     }
 
     draw(ctx) {

@@ -6,10 +6,10 @@ class MoveableObject extends DrawableObject {
     accelaration = 2.5;
     energy = 100;
     lastHit = 0;
-    offsetLeft = 35;
-    offsetRight = 35;
-    offsetTop = 10;
-    offsetBottom = 10;
+    offsetLeft = 0;
+    offsetRight = 0;
+    offsetTop = 0;
+    offsetBottom = 0;
     currentFrame = 0;
     currentWalkFrame = 0;
     totalWalkFrames = 1;
@@ -22,30 +22,45 @@ class MoveableObject extends DrawableObject {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Enemy) {
+        
             ctx.beginPath();
             ctx.lineWidth = "5";
             ctx.strokeStyle = "blue";
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.rect(
+        this.x + this.offsetLeft, 
+        this.y + this.offsetTop, 
+        this.width - this.offsetLeft - this.offsetRight, 
+        this.height - this.offsetTop - this.offsetBottom
+    );
             ctx.stroke();
-        }
+        
     }
 
-    applyGravity() {
-        setInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
+applyGravity() {
+    setInterval(() => {
+        if (this.isAboveGround() || this.speedY > 0) {
             this.y -= this.speedY;
-            this.speedY -= this.accelaration;}
-        }, 1000 / 25);
-    }
-
-    isAboveGround() {
-        if(this instanceof ThrowableObject) {
-            return true;
-        } else {
-            return this.y < 260;
+            this.speedY -= this.accelaration;
         }
+
+        if (!this.isAboveGround()) {
+            if (!(this instanceof ThrowableObject)) {
+                // Probiere hier einen höheren Wert statt 260, z.B. 400
+                this.y = 410 - (this.height - this.offsetBottom);
+                this.speedY = 0;
+            }
+        }
+    }, 1000 / 25);
+}
+
+isAboveGround() {
+    if (this instanceof ThrowableObject) {
+        return true;
+    } else {
+        // Hier muss dann natürlich auch der gleiche Wert (410) stehen
+        return (this.y + this.height - this.offsetBottom) < 410;
     }
+}
 
     moveLeft() {
         this.x -= this.speed;

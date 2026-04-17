@@ -59,5 +59,17 @@ function initLevel() {
         new CollectibleArrow(800, 100),
         new CollectibleArrow(1400, 200)
     ],
+
+    [
+        new CollectibleSake(500, 200),
+        new CollectibleSake(600, 150),
+        new CollectibleSake(1100, 250),
+        new CollectibleSake(700, 200),
+        new CollectibleSake(800, 150),
+        new CollectibleSake(900, 200),
+        new CollectibleSake(1000, 150),
+        new CollectibleSake(1200, 200),
+        new CollectibleSake(1300, 150),
+    ]
 );
 }
