@@ -26,9 +26,27 @@
     <title>Bow of the Dead</title>
 </head>
 <body onload="init()">
+
+    <div id="rotateDevice" class="rotate-overlay d-none">
+        <div class="rotate-content">
+            <img src="img/site/rotate_icon.png" alt="Rotate">
+            <p>Please rotate your device to landscape mode!</p>
+        </div>
+    </div>
+
 <div class="game" id="game">
     <h1>Bow of the Dead</h1>
     <div class="canvas-wrapper">
+        <div id="hud">
+            <div class="panel">
+                <button id="btnLeft">←</button>
+                <button id="btnRight">→</button>
+            </div>
+        <div class="panel">
+            <button id="btnUp">Jump</button>
+            <button id="btnSpace">Shoot</button>
+        </div>
+    </div>
         <div id="startScreen" class="overlay">
             <div class="menu-container">
                 <button class="btn-main" onclick="startGame()">Start Game</button>
@@ -56,19 +74,14 @@
 </div>
     </div>
 </div>
-    <div id="hud">
-        <div class="panel">
-            <button onclick="tooglePause()">Pause</button>
+    
+        <div class="settings-menu">
             <button onclick="toggleMute()">Mute</button>
-            <button onclick="restartGame()">Restart</button>            
+            <button onclick="openFullscreen()">Fullscreen</button>
+            <button onclick="restartGame()">Restart</button>
         </div>
-        <div class="panel">
-            <button id="btnLeft">Left</button>
-            <button id="btnRight">Right</button>
-            <button id="btnUp">Jump</button>
-            <button id="btnSpace">Shoot</button>
-        </div>
-    </div>
-    <button onclick="openFullscreen()">Fullscreen</button>
+    <footer class="game-footer">
+    <a href="legal.html">Impressum / Datenschutz</a>
+</footer>
 </body>
 </html>

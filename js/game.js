@@ -1,6 +1,7 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isMuted = false;
 
 
 function init() {
@@ -20,7 +21,20 @@ function startGame() {
 }
 
 function restartGame() {
+    // 1. Die alte Welt stoppen, falls sie existiert
+    if (world) {
+        // Musik pausieren und an den Anfang zurücksetzen
+        world.background_music.pause();
+        world.background_music.currentTime = 0;
+        
+        // Alle laufenden Intervalle (Bewegungen, Kollisionen) stoppen
+        world.clearAllIntervals();
+    }
+
+    // 2. UI aufräumen
     document.getElementById('gameOverScreen').classList.add('d-none');
+    
+    // 3. Level neu initialisieren und neue Welt starten
     initLevel(); 
     world = new World(canvas, keyboard, level1);
 }
@@ -31,6 +45,27 @@ function showControlls() {
 
 function closeControlls() {
     document.getElementById('controlls').classList.add('d-none');
+}
+
+function toggleMute() {
+    isMuted = !isMuted;
+    // Sound in der World aktualisieren
+    if (world) {
+        world.background_music.muted = isMuted;
+    }
+    // Button-Text anpassen (optional)
+    console.log("Muted: " + isMuted);
+}
+
+function openFullscreen() {
+    let container = document.getElementById('game');
+    if (container.requestFullscreen) {
+        container.requestFullscreen();
+    } else if (container.webkitRequestFullscreen) { /* Safari */
+        container.webkitRequestFullscreen();
+    } else if (container.msRequestFullscreen) { /* IE11 */
+        container.msRequestFullscreen();
+    }
 }
 
 window.addEventListener("keydown", (e) => {
@@ -70,6 +105,24 @@ window.addEventListener("keyup", (e) => {
 });
 
 function buttonPressedEvents() {
+const mobileButtons = ["btnLeft", "btnRight", "btnUp", "btnSpace"];
+    
+    mobileButtons.forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) {
+            btn.addEventListener("touchstart", (e) => {
+                e.preventDefault(); // Verhindert Zoom und Kontextmenü nur auf dem Button
+                // Deine Logik (z.B. keyboard.left = true)
+            });
+            
+            // Verhindert das Kontextmenü spezifisch auf diesem Button
+            btn.oncontextmenu = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            };
+        }
+    });
     document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
         e.preventDefault();
         keyboard.left = true;});

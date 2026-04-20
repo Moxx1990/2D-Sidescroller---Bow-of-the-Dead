@@ -17,7 +17,7 @@ character = new Character();
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level;
-        this.setWorld();     
+        this.setWorld();  
         this.run();
         this.sakeAmount = new SakeAmount();
         this.draw();

@@ -1,6 +1,16 @@
+/* 1. FONTS & GRUNDSTEUERUNG */
 @font-face {
     font-family: 'covearg';
     src: url('fonts/COVEARG_.TTF') format('truetype');
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Verhindert Scrollen komplett */
+    width: 100%;
+
 }
 
 body {
@@ -8,12 +18,23 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin: 0;
-    min-height: 100vh;
     background-image: url('img/site/background.jpg');
     background-position: center;
+    background-size: cover;
     color: black;
     font-family: 'covearg', Arial, Helvetica, sans-serif;
+    user-select: none;
+}
+
+/* 2. GAME CONTAINER & CANVAS */
+.game {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 canvas {
@@ -30,8 +51,12 @@ canvas {
     border: 4px solid #333; 
     box-shadow: 0 0 20px rgba(0,0,0,0.5);
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* 3. OVERLAYS (Start, Controls, Game Over) */
 .overlay {
     position: absolute;
     top: 0;
@@ -48,6 +73,7 @@ canvas {
 h1 {
     font-size: 64px;
     letter-spacing: 3px;
+    margin: 10px 0;
 }
 
 button {
@@ -59,54 +85,18 @@ button {
     background-color: #333;
     color: white;
     cursor: pointer;
-}
-
-.game {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.start-screen {
-    position: absolute;
-    top: 110px; 
-    width: 720px;
-    height: 480px;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-.start-screen img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.8;
-}
-
-.start-screen button {
-    position: relative;
-    z-index: 11;
-    font-size: 32px;
-    padding: 20px 40px;
-    background-color: #8b0000;
-    border: 2px solid white;
     transition: transform 0.1s ease;
 }
 
-.start-screen button:hover {
-    transform: scale(1.1);
-    background-color: #ff0000;
+button:active {
+    transform: scale(0.95);
 }
 
 .d-none {
     display: none !important;
 }
 
+/* 4. MENÜ & CONTROLS DESIGN */
 .menu-container {
     display: flex;
     flex-direction: column;
@@ -121,24 +111,6 @@ button {
     border: 2px solid white !important;
 }
 
-.btn-sub {
-    font-size: 20px !important;
-    background-color: #333 !important;
-}
-
-.controlls {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 720px;
-    height: 480px;
-    background-color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 30; 
-}
-
 .controlls-content {
     background-image: url('img/site/paper_texture.png');
     background-color: #1a1a1a;
@@ -150,32 +122,113 @@ button {
     box-shadow: inset 0 0 15px #000;
 }
 
-.instruction-grid p {
-    margin: 10px 0;
-    font-size: 20px;
-    border-bottom: 1px solid #444;
-    padding-bottom: 5px;
+/* 5. HUD & TOUCH BUTTONS (Standardmäßig aus) */
+#hud {
+    display: none;
+    pointer-events: none;
+    z-index: 50;
 }
 
-.flavor-text {
-    color: #ff4500;
+#hud .panel {
+    pointer-events: auto;
+    display: flex;
+    gap: 10px;
+}
+
+/* 6. ROTATE DEVICE OVERLAY */
+#rotateDevice {
+    display: none;
+}
+
+.rotate-content img {
+    width: 100px;
+    animation: rotateAnim 2s infinite;
+}
+
+.settings-menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
     margin-top: 15px;
-    font-style: italic;
 }
 
-.btn-close {
-    margin-top: 20px;
-    background-color: #555;
+.settings-menu button {
+    font-size: 14px;
+    padding: 5px 15px;
 }
 
-@media only screen and (max-width: 720px) {
+@keyframes rotateAnim {
+    0% { transform: rotate(0deg); }
+    50% { transform: rotate(-90deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* 7. MOBILE ANPASSUNGEN (Querformat & Kleine Bildschirme) */
+@media (max-width: 1024px) {
+    h1 { font-size: 32px; }
+
+    /* Canvas füllt Screen aus, behält aber Ratio */
+    .canvas-wrapper {
+        width: 100vw;
+        height: 100vh;
+        border: none;
+        max-width: 100vw;
+        max-height: 100vh;
+    }
+
     canvas {
         width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    /* HUD Buttons einschalten und positionieren */
+    #hud {
+        display: flex;
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        justify-content: space-between;
+        padding: 0 30px;
+    }
+
+    #hud button {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        background-color: rgba(139, 0, 0, 0.7);
+        border: 2px solid white;
+        font-size: 10px;
+        font-weight: bold;
     }
 }
 
-@media only screen and (max-height: 480px) {
-    canvas {
-        height: 100vh;
+/* Portrait-Sperre */
+@media screen and (orientation: portrait) and (max-width: 1024px) {
+    #rotateDevice {
+        display: flex !important;
+        position: fixed;
+        background: black;
+        z-index: 9999;
+        top: 0; left: 0; right: 0; bottom: 0;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        text-align: center;
     }
+}
+
+/* Footer / Impressum */
+.game-footer {
+    position: absolute;
+    bottom: 5px;
+    font-size: 12px;
+}
+
+.game-footer a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.5;
 }
