@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style/style.css">
     <link rel="icon" type="image/x-icon" href="/img/site/favicon.png">
     <script src="js/script.js"></script>
    <script src="models/drawable-object.class.js"></script>
@@ -26,21 +26,19 @@
     <title>Bow of the Dead</title>
 </head>
 <body onload="init()">
-
     <div id="rotateDevice" class="rotate-overlay d-none">
         <div class="rotate-content">
             <img src="img/site/rotate_icon.png" alt="Rotate">
             <p>Please rotate your device to landscape mode!</p>
         </div>
     </div>
-
 <div class="game" id="game">
     <h1>Bow of the Dead</h1>
     <div class="canvas-wrapper">
-        <div id="hud">
+        <div id="hud" class="d-none">
             <div class="panel">
-                <button id="btnLeft">←</button>
-                <button id="btnRight">→</button>
+                <button id="btnLeft">&#10094;</button>
+                <button id="btnRight">&#10095;</button>
             </div>
         <div class="panel">
             <button id="btnUp">Jump</button>

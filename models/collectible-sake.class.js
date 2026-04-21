@@ -2,16 +2,14 @@ class CollectibleSake extends MoveableObject {
     
     width = 20;
     height = 20;
-    glowColor = 'rgba(255, 255, 255, 0.8)'; // Weißes Leuchten für Glas
+    glowColor = 'rgba(255, 255, 255, 0.8)';
     glowAnimationStep = 0;
 
     constructor(x, y) {
         super();
-        this.loadImage('img/Statusbar/collect/Sake.png'); // Pfad zu deinem Sake-Bild
+        this.loadImage('img/Statusbar/collect/Sake.png');
         this.x = x;
         this.y = y;
-        
-        // Hitbox schön eng an der Flasche
         this.offsetLeft = 5;
         this.offsetRight = 5;
         this.offsetTop = 5;

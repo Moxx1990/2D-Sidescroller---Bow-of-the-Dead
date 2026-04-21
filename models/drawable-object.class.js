@@ -8,12 +8,12 @@ class DrawableObject {
     width = 200;
 
     loadImages(arr) {
-    arr.forEach(path => {
-        let img = new Image();
-        img.src = path;
-        this.imageCache[path] = img;
-    });
-}
+        arr.forEach(path => {
+            let img = new Image();
+            img.src = path;
+            this.imageCache[path] = img;
+        });
+    }
 
     loadImage(path) {
         this.img = new Image();
@@ -21,8 +21,8 @@ class DrawableObject {
     }
 
     draw(ctx) {
-    ctx.fillStyle = 'red';
-    ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        ctx.fillStyle = 'red';
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
 }

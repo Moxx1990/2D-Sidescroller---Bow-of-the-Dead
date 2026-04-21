@@ -1,11 +1,11 @@
 class ArrowAmount extends DrawableObject {
-    arrows = 3; // Startwert
+    arrows = 3;
 
     constructor() {
         super();
         this.loadImage('img/Character/Arrow.png');
         this.x = 30;
-        this.y = 100;
+        this.y = 45;
         this.width = 40;
         this.height = 40;
     }

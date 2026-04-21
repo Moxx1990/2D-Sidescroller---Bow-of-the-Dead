@@ -12,10 +12,16 @@ function init() {
 
 function startGame() {
     initLevel();
-    let startScreen = document.getElementById('startScreen');
-    if (startScreen) {
-        startScreen.classList.add('d-none');
+    
+    // Startbildschirm weg
+    document.getElementById('startScreen').classList.add('d-none');
+
+    // HUD herholen
+    let hud = document.getElementById('hud');
+    if (hud) {
+        hud.classList.remove('d-none'); // Entfernt display: none, aktiviert display: flex aus dem Media-Query
     }
+
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
 }

@@ -1,6 +1,5 @@
 class ThrowableObject extends MoveableObject {
 
-
     constructor(x, y) {
     super();
     this.loadImage('img/Character/Arrow.png');
@@ -13,7 +12,7 @@ class ThrowableObject extends MoveableObject {
     this.offsetTop = 0;
     this.offsetBottom = 0;    
     this.shoot();
-}
+    }
 
     shoot() {
         this.speedY = 15;
@@ -22,6 +21,4 @@ class ThrowableObject extends MoveableObject {
             this.x += 25;
         }, 25);
     }
-    
-
 }
