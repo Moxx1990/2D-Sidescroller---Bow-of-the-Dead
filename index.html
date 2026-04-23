@@ -3,83 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="style/style.css">
     <link rel="icon" type="image/x-icon" href="/img/site/favicon.png">
+
     <script src="js/script.js"></script>
-   <script src="models/drawable-object.class.js"></script>
-<script src="models/moveable-object.class.js"></script>
-<script src="models/status-bar.class.js"></script>
-<script src="models/arrow-amount.class.js"></script>
-<script src="models/collectible-arrow.class.js"></script>
-<script src="models/collectible-sake.class.js"></script>
-<script src="models/sake-amount.class.js"></script>
-<script src="models/character.class.js"></script>
-<script src="models/enemy.class.js"></script>
-<script src="models/endboss.class.js"></script>
-<script src="models/background-object.class.js"></script>
-<script src="models/keyboard.class.js"></script>
-<script src="models/throwable-object.class.js"></script>
-<script src="models/level.class.js"></script>
-<script src="Levels/level1.js"></script>
-<script src="models/world.class.js"></script>
-<script src="js/game.js"></script>
+    <script src="models/drawable-object.class.js"></script>
+    <script src="models/moveable-object.class.js"></script>
+    <script src="models/status-bar.class.js"></script>
+    <script src="models/arrow-amount.class.js"></script>
+    <script src="models/collectible-arrow.class.js"></script>
+    <script src="models/collectible-sake.class.js"></script>
+    <script src="models/sake-amount.class.js"></script>
+    <script src="models/character.class.js"></script>
+    <script src="models/enemy.class.js"></script>
+    <script src="models/endboss.class.js"></script>
+    <script src="models/background-object.class.js"></script>
+    <script src="models/keyboard.class.js"></script>
+    <script src="models/throwable-object.class.js"></script>
+    <script src="models/level.class.js"></script>
+    <script src="Levels/level1.js"></script>
+    <script src="models/world.class.js"></script>
+    <script src="js/game.js"></script>
+
     <title>Bow of the Dead</title>
 </head>
 <body onload="init()">
-    <div id="rotateDevice" class="rotate-overlay d-none">
+
+    <div id="rotateDevice" class="rotate-overlay rotate-device-screen d-none">
         <div class="rotate-content">
             <img src="img/site/rotate_icon.png" alt="Rotate">
             <p>Please rotate your device to landscape mode!</p>
         </div>
     </div>
-<div class="game" id="game">
-    <h1>Bow of the Dead</h1>
-    <div class="canvas-wrapper">
-        <div id="hud" class="d-none">
-            <div class="panel">
-                <button id="btnLeft">&#10094;</button>
-                <button id="btnRight">&#10095;</button>
-            </div>
-        <div class="panel">
-            <button id="btnUp">Jump</button>
-            <button id="btnSpace">Shoot</button>
-        </div>
-    </div>
-        <div id="startScreen" class="overlay">
-            <div class="menu-container">
-                <button class="btn-main" onclick="startGame()">Start Game</button>
-                <button class="btn-sub" onclick="showControlls()">How to play</button>
-            </div>
-        </div>
-        <div id="controlls" class="overlay d-none">
-            <div class="controlls-content">
-                <h2>How to play</h2>
-                <div class="instruction-grid">
-                    <p><b>Move:</b> Left / Right Arrows</p>
-                    <p><b>Jump:</b> Up Arrow</p>
-                    <p><b>Shoot:</b> Space Bar</p>
+
+    <div class="game" id="game">
+        <h1>Bow of the Dead</h1>
+        <div class="canvas-wrapper">
+            
+            <div id="hud" class=" hud-overlay d-none">
+                <div class="panel">
+                    <button id="btnLeft" class="hud-btn btn-left">&#10094;</button>
+                    <button id="btnRight" class="hud-btn btn-right">&#10095;</button>
                 </div>
-                <p class="flavor-text">Defeat all enemies to win!</p>
-                <button class="btn-close" onclick="closeControlls()">Close</button>
+
+                <div class="panel">
+                    <button id="btnUp" class="hud-btn btn-up">Jump</button>
+                    <button id="btnSpace" class="hud-btn btn-space">Shoot</button>
+                </div>
+            </div>
+
+            <div id="startScreen" class="overlay">
+                <div class="menu-container">
+                    <button class="btn-main" onclick="startGame()">Start Game</button>
+                    <button class="btn-sub" onclick="showControlls()">How to play</button>
+                </div>
+            </div>
+
+            <div id="controlls" class="overlay d-none">
+                <div class="controlls-content">
+                    <h2>How to play</h2>
+                    <div class="instruction-grid">
+                        <p><b>Move:</b> Left / Right Arrows</p>
+                        <p><b>Jump:</b> Up Arrow</p>
+                        <p><b>Shoot:</b> Space Bar</p>
+                    </div>
+                    <p class="flavor-text">Defeat all enemies to win!</p>
+                    <button class="btn-close" onclick="closeControlls()">Close</button>
+                </div>
+            </div>
+
+            <canvas id="canvas" width="720" height="480"></canvas>
+
+            <div id="gameOverScreen" class="overlay d-none">
+                <div class="menu-container">
+                    <h2 style="color: #8b0000; font-size: 48px;">GAME OVER</h2>
+                    <button class="btn-main" onclick="restartGame()">Try Again</button>
+                </div>
+            </div>
+
+            <div id="winScreen" class="overlay d-none">
+                <div class="menu-container">
+                <h2 style="color: #ffd700; font-size: 48px;">YOU WIN!</h2>
+                    <p id="sakeResult" class="win-result-text" style="color: white; font-size: 24px;">Sake collected: 0</p>
+                    <button class="btn-main" onclick="restartGame()">Try Again</button>
+                </div>
             </div>
         </div>
-        <canvas id="canvas" width="720" height="480"></canvas>
-        <div id="gameOverScreen" class="overlay d-none">
-    <div class="menu-container">
-        <h2 style="color: #8b0000; font-size: 48px;">GAME OVER</h2>
-        <button class="btn-main" onclick="restartGame()">Try Again</button>
     </div>
-</div>
-    </div>
-</div>
     
-        <div class="settings-menu">
-            <button onclick="toggleMute()">Mute</button>
-            <button onclick="openFullscreen()">Fullscreen</button>
-            <button onclick="restartGame()">Restart</button>
-        </div>
+    <div class="settings-menu">
+        <button onclick="toggleMute()">Mute</button>
+        <button onclick="openFullscreen()">Fullscreen</button>
+        <button onclick="restartGame()">Restart</button>
+    </div>
+
     <footer class="game-footer">
-    <a href="legal.html">Impressum / Datenschutz</a>
-</footer>
+        <a href="legal.html">Impressum / Datenschutz</a>
+    </footer>
 </body>
 </html>

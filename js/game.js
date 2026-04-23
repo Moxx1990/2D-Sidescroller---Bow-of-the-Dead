@@ -1,148 +1,163 @@
+/** @type {HTMLCanvasElement} The main game canvas */
 let canvas;
+
+/** @type {World} The instance of the game world */
 let world;
+
+/** @type {Keyboard} Instance to manage user input states */
 let keyboard = new Keyboard();
+
+/** @type {boolean} Flag to track if the game audio is muted */
 let isMuted = false;
 
-
+/**
+ * Initializes the basic game setup by fetching the canvas and binding button events.
+ */
 function init() {
     canvas = document.getElementById("canvas");
     buttonPressedEvents();
     buttonUnpressedEvents();
 };
 
+/**
+ * Starts the game, initializes the level, hides the start screen, and creates the world instance.
+ */
 function startGame() {
     initLevel();
-    
-    // Startbildschirm weg
     document.getElementById('startScreen').classList.add('d-none');
-
-    // HUD herholen
     let hud = document.getElementById('hud');
     if (hud) {
-        hud.classList.remove('d-none'); // Entfernt display: none, aktiviert display: flex aus dem Media-Query
+        hud.classList.remove('d-none'); 
     }
-
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
 }
 
+/**
+ * Restarts the game by clearing all intervals, resetting music, and re-initializing the world.
+ */
 function restartGame() {
-    // 1. Die alte Welt stoppen, falls sie existiert
     if (world) {
-        // Musik pausieren und an den Anfang zurücksetzen
         world.background_music.pause();
         world.background_music.currentTime = 0;
-        
-        // Alle laufenden Intervalle (Bewegungen, Kollisionen) stoppen
         world.clearAllIntervals();
     }
-
-    // 2. UI aufräumen
     document.getElementById('gameOverScreen').classList.add('d-none');
-    
-    // 3. Level neu initialisieren und neue Welt starten
+    document.getElementById('winScreen').classList.add('d-none');
     initLevel(); 
     world = new World(canvas, keyboard, level1);
 }
 
+/**
+ * Displays the controls/how-to-play overlay.
+ */
 function showControlls() {
     document.getElementById('controlls').classList.remove('d-none');
 }
 
+/**
+ * Hides the controls/how-to-play overlay.
+ */
 function closeControlls() {
     document.getElementById('controlls').classList.add('d-none');
 }
 
+/**
+ * Toggles the game's audio states between muted and unmuted.
+ */
 function toggleMute() {
     isMuted = !isMuted;
-    // Sound in der World aktualisieren
     if (world) {
         world.background_music.muted = isMuted;
+        world.enemy_sound.muted = !world.enemy_sound.muted;
     }
-    // Button-Text anpassen (optional)
-    console.log("Muted: " + isMuted);
 }
 
+/**
+ * Requests fullscreen mode for the game container across different browsers.
+ */
 function openFullscreen() {
     let container = document.getElementById('game');
     if (container.requestFullscreen) {
         container.requestFullscreen();
-    } else if (container.webkitRequestFullscreen) { /* Safari */
+    } else if (container.webkitRequestFullscreen) {
         container.webkitRequestFullscreen();
-    } else if (container.msRequestFullscreen) { /* IE11 */
+    } else if (container.msRequestFullscreen) {
         container.msRequestFullscreen();
     }
 }
 
+/**
+ * Global listener for keydown events to update the keyboard state.
+ */
 window.addEventListener("keydown", (e) => {
     if (e.key == "ArrowLeft") {
-        keyboard.left = true;
-    }
+        keyboard.left = true;}
     if (e.key == "ArrowRight") {
-        keyboard.right = true;
-    }
+        keyboard.right = true;}
     if (e.key == "ArrowUp") {
-        keyboard.up = true;
-    }
+        keyboard.up = true;}
     if (e.key == "ArrowDown") {
-        keyboard.down = true;
-    }
+        keyboard.down = true;}
     if (e.key == " ") {
-        keyboard.space = true;
-    }
+        keyboard.space = true;}
 });
 
+/**
+ * Global listener for keyup events to update the keyboard state.
+ */
 window.addEventListener("keyup", (e) => {
     if (e.key == "ArrowLeft") {
-        keyboard.left = false;
-    }
+        keyboard.left = false;}
     if (e.key == "ArrowRight") {
-        keyboard.right = false;
-    }
+        keyboard.right = false;}
     if (e.key == "ArrowUp") {
-        keyboard.up = false;
-    }
+        keyboard.up = false;}
     if (e.key == "ArrowDown") {
-        keyboard.down = false;
-    }
+        keyboard.down = false;}
     if (e.key == " ") {
-        keyboard.space = false;
-    }
+        keyboard.space = false;}
 });
 
+/**
+ * Binds touch events to mobile UI buttons and maps them to keyboard states.
+ */
 function buttonPressedEvents() {
-const mobileButtons = ["btnLeft", "btnRight", "btnUp", "btnSpace"];
+    const controls = { btnLeft: "left", btnRight: "right", btnUp: "up", btnSpace: "space" };
+    preventDefaultTouch(Object.keys(controls));
     
-    mobileButtons.forEach(id => {
+    Object.keys(controls).forEach(id => {
         const btn = document.getElementById(id);
         if (btn) {
-            btn.addEventListener("touchstart", (e) => {
-                e.preventDefault(); // Verhindert Zoom und Kontextmenü nur auf dem Button
-                // Deine Logik (z.B. keyboard.left = true)
+            btn.addEventListener("touchstart", () => {
+                keyboard[controls[id]] = true;
             });
-            
-            // Verhindert das Kontextmenü spezifisch auf diesem Button
-            btn.oncontextmenu = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                return false;
-            };
+            btn.addEventListener("touchend", () => {
+                keyboard[controls[id]] = false;
+            });
         }
     });
-    document.getElementById("btnLeft").addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        keyboard.left = true;});
-    document.getElementById("btnRight").addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        keyboard.right = true;});
-    document.getElementById("btnUp").addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        keyboard.up = true;});
-    document.getElementById("btnSpace").addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        keyboard.space = true;});
-};
+}
 
+/**
+ * Prevents default browser touch behavior (like zooming or context menus) for specific element IDs.
+ * @param {string[]} ids - Array of element IDs to apply the prevention.
+ */
+function preventDefaultTouch(ids) {
+    ids.forEach(id => {
+        const btn = document.getElementById(id);
+        if (!btn) return;
+        btn.addEventListener("touchstart", (e) => e.preventDefault());
+        btn.oncontextmenu = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+    });
+}
+
+/**
+ * Explicitly binds touchend events to ensure keyboard states are reset when releasing buttons.
+ */
 function buttonUnpressedEvents() {
     document.getElementById("btnLeft").addEventListener("touchend", (e) => {
         e.preventDefault();

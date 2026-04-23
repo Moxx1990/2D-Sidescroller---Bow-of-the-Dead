@@ -1,5 +1,14 @@
+/**
+ * @type {Level} 
+ * The global variable holding the current level instance.
+ */
 let level1;
 
+/**
+ * Initializes the first level by instantiating the Level class with all its game objects.
+ * This includes enemies, the background layers, collectible arrows, and sake bottles.
+ * The background objects are positioned in 720-pixel increments to create a seamless scrolling effect.
+ */
 function initLevel() {
     level1 = new Level(
     [

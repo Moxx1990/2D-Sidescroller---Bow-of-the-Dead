@@ -9,7 +9,6 @@ html, body {
     padding: 0;
     overflow: hidden;
     width: 100%;
-
 }
 
 body {
@@ -71,6 +70,7 @@ h1 {
     font-size: 64px;
     letter-spacing: 3px;
     margin: 10px 0;
+    color: #8b0000;
 }
 
 button {
@@ -118,19 +118,19 @@ button:active {
     box-shadow: inset 0 0 15px #000;
 }
 
-#hud {
+.hud-overlay {
     display: none;
     pointer-events: none;
     z-index: 50;
 }
 
-#hud .panel {
+.hud-overlay .panel {
     pointer-events: auto;
     display: flex;
     gap: 10px;
 }
 
-#rotateDevice {
+.rotate-device-screen {
     display: none;
 }
 
@@ -198,7 +198,7 @@ button:active {
         object-fit: contain;
     }
 
-    #hud {
+    .hud-overlay {
         display: flex !important;
         position: absolute;
         bottom: 20px;
@@ -210,17 +210,17 @@ button:active {
         z-index: 100;
     }
 
-    #hud.d-none {
+    .hud-overlay .d-none {
         display: none !important;
     }
 
-    #hud .panel {
+    .hud-overlay .panel {
         pointer-events: auto;
         display: flex;
         gap: 15px;
     }
 
-    #hud button {
+    .hud-btn {
         width: 75px;
         height: 75px;
         border-radius: 50%;
@@ -239,22 +239,27 @@ button:active {
         backdrop-filter: blur(5px);
     }
 
-    #btnLeft, #btnRight {
+    .btnLeft, .btnRight {
         font-size: 38px !important;
         margin-top: -2px; 
     }
 
-    #btnUp, #btnSpace {
+    .btnUp, .btnSpace {
         font-size: 16px !important;
         font-weight: 900 !important;
         text-transform: uppercase;
         letter-spacing: 1px;
     }
+
+    .win-result-text {
+    margin: 10px 0 20px 0;
+    font-family: 'covearg', Arial, sans-serif;
+    }
 }
 
 
 @media screen and (orientation: portrait) and (max-width: 1024px) {
-    #rotateDevice {
+    .rotate-device-screen {
         display: flex !important;
         position: fixed;
         background: black;
