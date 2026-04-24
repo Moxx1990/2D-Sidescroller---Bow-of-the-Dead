@@ -4,29 +4,17 @@
  */
 class Character extends MoveableObject {
 
-    /** @type {number} The current animation frame index. */
     currentFrame = 0;
-    /** @type {number} Total frames available in the standard movement animation. */
     totalFrames = 7;
-    /** @type {number} Width of a single frame in the sprite sheet. */
     frameWidth = 128;
-    /** @type {number} Height of a single frame in the sprite sheet. */
     frameHeight = 128;
-    /** @type {World} Reference to the world instance for camera and input access. */
     world;
-    /** @type {number} Movement speed on the X-axis. */
     speed = 5;
-    /** @type {number} Amount of arrows currently held by the character. */
     arrow = 0;
-    /** @type {number} Amount of sake collected. */
     sake = 0;
-    /** @type {boolean} Cooldown flag for throwing projectiles. */
     canThrow = true;
-    /** @type {HTMLAudioElement} Sound played during movement. */
     walking_sound = new Audio('audio/running.mp3');
-    /** @type {HTMLAudioElement} Sound played when shooting an arrow. */
     shooting_sound = new Audio('audio/shoot.mp3');
-    /** @type {boolean} Flag to ensure the death animation and sound trigger only once. */
     deathAnimationStarted = false;
     
     /**
@@ -57,9 +45,11 @@ class Character extends MoveableObject {
      */
     throwArrow() {
         if (this.arrow > 0) {
-            this.shooting_sound.pause();
-            this.shooting_sound.currentTime = 0;
-            this.shooting_sound.play();
+            if (!this.world.gameIsMuted) {
+                this.shooting_sound.pause();
+                this.shooting_sound.currentTime = 0;
+                this.shooting_sound.play();
+            }
             let arrow = new ThrowableObject(this.x + 50, this.y + 50);
             this.world.throwableObjects.push(arrow);
             this.arrow--;
@@ -98,8 +88,10 @@ class Character extends MoveableObject {
     handleMovement() {
         this.walking_sound.pause();
         if (this.world.keyboard.right || this.world.keyboard.left) {
-            this.world.background_music.play();
-            if (!this.isAboveGround()) this.walking_sound.play();
+            if (!this.world.gameIsMuted) {
+                this.world.background_music.play();
+                if (!this.isAboveGround()) this.walking_sound.play();
+            }   
         }
         if (this.world.keyboard.left && this.x > 0) this.moveLeft();
         if (this.world.keyboard.right && this.x < this.world.level.level_end_x) {
@@ -145,7 +137,9 @@ class Character extends MoveableObject {
         if (!this.deathAnimationStarted) {
             this.currentFrame = 0;
             this.deathAnimationStarted = true;
-            new Audio('audio/gameOver.mp3').play();
+            if (!this.world.gameIsMuted) {
+                new Audio('audio/gameOver.mp3').play();
+            }
         }
         this.img = this.deathSheet;
         if (this.currentFrame < 4) this.currentFrame++;

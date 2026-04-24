@@ -5,25 +5,15 @@
  */
 class Endboss extends MoveableObject {
 
-    /** @type {number} The total health points of the boss. */
-    energy = 3;
-    /** @type {number} Rendering height of the boss sprite. */
+    energy = 5;
     height = 350;
-    /** @type {number} Rendering width of the boss sprite. */
     width = 250;
-    /** @type {number} Initial vertical position on the canvas. */
     y = 70;
-    /** @type {number} Current index in the walking animation sequence. */
     currentWalkFrame = 0;
-    /** @type {number} Total number of frames in the walking sprite sheet. */
     totalWalkFrames = 6; 
-    /** @type {number} Current index in the death animation sequence. */
     currentDeathFrame = 0;
-    /** @type {number} Total number of frames in the death sprite sheet. */
     totalDeathFrames = 5; 
-    /** @type {number} The width of an individual frame in the sprite sheet. */
     frameWidth = 128;
-    /** @type {number} The height of an individual frame in the sprite sheet. */
     frameHeight = 128;
 
     /**
@@ -39,8 +29,8 @@ class Endboss extends MoveableObject {
         this.loadImage('img/Enemy/Basic/Walk.png');
         this.deathSheet = new Image();
         this.deathSheet.src = 'img/Enemy/Basic/Dead.png';
-        this.x = 2050;
-        this.speed = 0.15;
+        this.x = 2100;
+        this.speed = 0.7;
         this.playEnemyAnimation();
     }
 

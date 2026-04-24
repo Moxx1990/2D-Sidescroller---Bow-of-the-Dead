@@ -2,32 +2,21 @@
  * Represents the game world where all objects, logic, and rendering come together.
  */
 class World {
-    /** @type {Character} The player character instance. */
+
     character = new Character();
-    /** @type {Level} The current level structure. */
     level;
-    /** @type {HTMLCanvasElement} The canvas element to draw on. */
     canvas;
-    /** @type {CanvasRenderingContext2D} The 2D rendering context. */
     ctx;
-    /** @type {Keyboard} Input management for character control. */
     keyboard;
-    /** @type {boolean} Flag to prevent multiple win triggers. */
     gameWonTriggered = false;
-    /** @type {number} Camera offset on the X-axis for scrolling. */
     camera_x = 0;
-    /** @type {StatusBar} UI element for character health. */
     statusBar = new StatusBar();
-    /** @type {ArrowAmount} UI element for arrow count. */
     arrowAmount = new ArrowAmount();
-    /** @type {ThrowableObject[]} Array of arrows currently in the air. */
     throwableObjects = [];
-    /** @type {HTMLAudioElement} The main background music. */
     background_music = new Audio('audio/music.mp3');
-    /** @type {HTMLAudioElement} Ambient sound played when enemies are nearby. */
     enemy_sound = new Audio('audio/enemy.mp3');
-    /** @type {boolean} Flag to track if the enemy ambient sound is currently playing. */
     enemySoundPlaying = false;
+    gameIsMuted = false;
 
     /**
      * Creates an instance of the World.
@@ -40,11 +29,17 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.level = level;
+        let savedMute = localStorage.getItem('gameMuted');
+        this.gameIsMuted = (savedMute === 'true');
         this.setWorld();  
         this.run();
         this.sakeAmount = new SakeAmount();
         this.draw();
-        this.playBackgroundMusic();
+      if (!this.gameIsMuted) {
+            this.playBackgroundMusic();
+        } else {
+            this.background_music.pause();
+        }
     }
 
     /**
@@ -166,7 +161,7 @@ class World {
     checkWinCondition() {
         if (this.allEnemiesDefeated() && !this.gameWonTriggered && !this.gameOverTriggered) {
             this.gameWonTriggered = true;
-            this.muteAllSounds();
+            this.stopAllRunningSounds();
             setTimeout(() => {
                 this.clearAllIntervals();
                 const sakeText = `Sake collected: ${this.character.sake}`;
@@ -180,10 +175,17 @@ class World {
      * Stops all active game sounds.
      */
     muteAllSounds() {
+        this.gameIsMuted = true;
+        localStorage.setItem('gameMuted', 'true');
         this.background_music.pause();
-        this.enemy_sound.pause();
         this.character.walking_sound.pause();
         this.character.shooting_sound.pause();
+        this.stopEnemySound();
+        this.level.enemies.forEach(enemy => {
+        if (enemy.walking_sound) {
+            enemy.walking_sound.pause();
+            }
+        });
     }
 
     /**
@@ -267,12 +269,12 @@ class World {
             return !enemy.isDead() && 
                 enemy.x + this.camera_x > -200 && 
                 enemy.x + this.camera_x < this.canvas.width + 200;
-            });
-            if (enemyNearby && !this.enemySoundPlaying) {
-                this.playEnemySound();
-            } else if (!enemyNearby && this.enemySoundPlaying) {
-                this.stopEnemySound();
-            }
+        });
+        if (enemyNearby && !this.enemySoundPlaying && !this.gameIsMuted) {
+            this.playEnemySound();
+        } else if ((!enemyNearby || this.gameIsMuted) && this.enemySoundPlaying) {
+            this.stopEnemySound();
+        }
     }
 
     /**
@@ -389,5 +391,20 @@ class World {
      */
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
+    }
+
+    /**
+    * Pauses all currently playing audio tracks (background music, character, and enemy sounds).
+    * This is used to silence the game during screen transitions (e.g., Win or Game Over)
+    * without affecting the persistent mute settings in local storage.
+    */
+    stopAllRunningSounds() {
+        this.background_music.pause();
+        this.character.walking_sound.pause();
+        this.character.shooting_sound.pause();
+        this.stopEnemySound();
+        this.level.enemies.forEach(enemy => {
+            if (enemy.walking_sound) enemy.walking_sound.pause();
+        });
     }
 }

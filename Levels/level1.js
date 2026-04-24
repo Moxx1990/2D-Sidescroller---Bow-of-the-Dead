@@ -1,7 +1,3 @@
-/**
- * @type {Level} 
- * The global variable holding the current level instance.
- */
 let level1;
 
 /**

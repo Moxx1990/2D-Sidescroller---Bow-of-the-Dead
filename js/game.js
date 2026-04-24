@@ -1,14 +1,7 @@
-/** @type {HTMLCanvasElement} The main game canvas */
 let canvas;
-
-/** @type {World} The instance of the game world */
 let world;
-
-/** @type {Keyboard} Instance to manage user input states */
 let keyboard = new Keyboard();
-
-/** @type {boolean} Flag to track if the game audio is muted */
-let isMuted = false;
+let isMuted = localStorage.getItem('gameMuted') === 'true';
 
 /**
  * Initializes the basic game setup by fetching the canvas and binding button events.
@@ -31,6 +24,7 @@ function startGame() {
     }
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
+    document.getElementById('restartButton').classList.remove('d-none');
 }
 
 /**
@@ -40,6 +34,7 @@ function restartGame() {
     if (world) {
         world.background_music.pause();
         world.background_music.currentTime = 0;
+        world.stopEnemySound();
         world.clearAllIntervals();
     }
     document.getElementById('gameOverScreen').classList.add('d-none');
@@ -66,10 +61,32 @@ function closeControlls() {
  * Toggles the game's audio states between muted and unmuted.
  */
 function toggleMute() {
-    isMuted = !isMuted;
     if (world) {
-        world.background_music.muted = isMuted;
-        world.enemy_sound.muted = !world.enemy_sound.muted;
+        world.gameIsMuted = !world.gameIsMuted;
+        localStorage.setItem('gameMuted', world.gameIsMuted.toString());
+        if (world.gameIsMuted) {
+            stopAllSounds();
+        } else {
+            world.background_music.volume = 0.2;
+            world.background_music.play();
+        }
+    }
+}
+
+/**
+ * A helper function that pauses all currently running instances.
+ */
+function stopAllSounds() {
+    if (world) {
+        world.background_music.pause();
+        world.character.walking_sound.pause();
+        world.character.shooting_sound.pause();
+        world.stopEnemySound();
+        if (world.level && world.level.enemies) {
+            world.level.enemies.forEach(enemy => {
+                if (enemy.walking_sound) enemy.walking_sound.pause();
+            });
+        }
     }
 }
 
