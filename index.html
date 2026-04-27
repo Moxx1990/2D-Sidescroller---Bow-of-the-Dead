@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="style/style.css">
-    <link rel="icon" type="image/x-icon" href="/img/site/favicon.png">
+    <link rel="stylesheet" href="style/media.css">
+    <link rel="icon" type="image/x-icon" href="img/site/favicon.png">
 
     <script src="js/script.js"></script>
     <script src="models/drawable-object.class.js"></script>
@@ -93,7 +94,7 @@
     </div>
     
     <div class="settings-menu">
-        <button onclick="toggleMute()">Mute</button>
+        <button id="muteButton" class="btn-mute" onclick="toggleMute()">&#128266;</button>
         <button onclick="openFullscreen()">Fullscreen</button>
         <button onclick="restartGame()" id="restartButton" class="btn-restart d-none">Restart</button>
     </div>

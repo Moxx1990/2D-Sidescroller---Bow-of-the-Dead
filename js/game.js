@@ -9,6 +9,9 @@ let isMuted = localStorage.getItem('gameMuted') === 'true';
 function init() {
     canvas = document.getElementById("canvas");
     document.body.classList.add('game-not-started');
+    isMuted = localStorage.getItem('gameMuted') === 'true';
+    const muteBtn = document.getElementById('muteButton');
+    if (muteBtn) muteBtn.innerHTML = isMuted ? '&#128263;' : '&#128266;';
     buttonPressedEvents();
     buttonUnpressedEvents();
 };
@@ -65,16 +68,13 @@ function closeControlls() {
  * Toggles the game's audio states between muted and unmuted.
  */
 function toggleMute() {
-    if (world) {
-        world.gameIsMuted = !world.gameIsMuted;
-        localStorage.setItem('gameMuted', world.gameIsMuted.toString());
-        if (world.gameIsMuted) {
-            stopAllSounds();
-        } else {
-            world.background_music.volume = 0.2;
-            world.background_music.play();
-        }
-    }
+    isMuted = !isMuted;
+    localStorage.setItem('gameMuted', isMuted);
+    const btn = document.getElementById('muteButton');
+    if (btn) btn.innerHTML = isMuted ? '&#128263;' : '&#128266;';
+    if (!world) return;
+    world.gameIsMuted = isMuted;
+    isMuted ? stopAllSounds() : (world.background_music.volume = 0.2, world.background_music.play());
 }
 
 /**

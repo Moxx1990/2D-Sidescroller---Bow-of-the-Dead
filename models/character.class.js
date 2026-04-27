@@ -115,19 +115,17 @@ class Character extends MoveableObject {
      * Selects and plays the appropriate animation based on the character's state.
      */
     playCorrectAnimation() {
-        if (this.isDead()) {
-            this.handleDeathAnimation();
-        } else if (this.isHurt()) {
+        if (this.isDead()) return this.handleDeathAnimation();
+        if (this.isHurt()) {
             this.img = this.hurtSheet;
-            this.currentFrame = (this.currentFrame + 1) % 3;
-        } else if (this.isAboveGround()) {
-            this.handleJumpAnimation();
-        } else if (this.world.keyboard.left || this.world.keyboard.right) {
-            this.setAnimationState('img/Character/Run.png', (this.currentFrame + 1) % this.totalFrames);
-        } else {
-            this.setAnimationState('img/Character/Idle.png', 0);
-            this.deathAnimationStarted = false;
+            return this.currentFrame = (this.currentFrame + 1) % 3;
         }
+        if (this.isAboveGround()) return this.handleJumpAnimation();
+        let isMoving = this.world.keyboard.left || this.world.keyboard.right;
+        this.totalFrames = isMoving ? 8 : 9;
+        let path = isMoving ? 'img/Character/Run.png' : 'img/Character/Idle.png';
+        this.setAnimationState(path, (this.currentFrame + 1) % this.totalFrames);
+        if (!isMoving) this.deathAnimationStarted = false;
     }
 
     /**

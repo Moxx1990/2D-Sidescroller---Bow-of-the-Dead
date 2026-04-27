@@ -25,21 +25,13 @@ class World {
      * @param {Level} level - The level data.
      */
     constructor(canvas, keyboard, level) {
-        this.ctx = canvas.getContext('2d');
-        this.canvas = canvas;
-        this.keyboard = keyboard;
-        this.level = level;
-        let savedMute = localStorage.getItem('gameMuted');
-        this.gameIsMuted = (savedMute === 'true');
-        this.setWorld();  
+        Object.assign(this, { canvas, keyboard, level, ctx: canvas.getContext('2d') });
+        this.gameIsMuted = localStorage.getItem('gameMuted') === 'true';
+        this.setWorld();
         this.run();
         this.sakeAmount = new SakeAmount();
         this.draw();
-      if (!this.gameIsMuted) {
-            this.playBackgroundMusic();
-        } else {
-            this.background_music.pause();
-        }
+        this.gameIsMuted ? this.background_music.pause() : this.playBackgroundMusic();
     }
 
     /**

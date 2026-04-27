@@ -3,14 +3,15 @@
  * Supports standard, Webkit (Chrome/Safari), and MS (IE/Edge) versions of the API.
  */
 function openFullscreen() {
-    let elem = document.getElementById('game');
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-    }
+  let container = document.querySelector('.game');
+  let elem = document.getElementById('game');
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
 }
 
 /**

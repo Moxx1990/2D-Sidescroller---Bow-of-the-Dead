@@ -10,11 +10,11 @@ class Endboss extends MoveableObject {
     width = 250;
     y = 70;
     currentWalkFrame = 0;
-    totalWalkFrames = 6; 
+    totalWalkFrames = 8; 
     currentDeathFrame = 0;
     totalDeathFrames = 5; 
-    frameWidth = 128;
-    frameHeight = 128;
+    frameWidth = 96;
+    frameHeight = 96;
 
     /**
      * Creates an instance of the Endboss.
@@ -26,9 +26,9 @@ class Endboss extends MoveableObject {
         this.offsetRight = 130;
         this.offsetTop = 100;
         this.offsetBottom = 20;
-        this.loadImage('img/Enemy/Basic/Walk.png');
+        this.loadImage('img/Endboss/Walk.png');
         this.deathSheet = new Image();
-        this.deathSheet.src = 'img/Enemy/Basic/Dead.png';
+        this.deathSheet.src = 'img/Endboss/Dead.png';
         this.x = 2100;
         this.speed = 0.7;
         this.playEnemyAnimation();
