@@ -5,13 +5,9 @@
  */
 class CollectibleArrow extends MoveableObject {
 
-    /** @type {number} Rendering width of the arrow. */
     width = 50;
-    /** @type {number} Rendering height of the arrow. */
     height = 100;
-    /** @type {string} Color of the outer glow effect (Yellow/Gold). */
     glowColor = 'rgba(255, 255, 0, 0.7)';
-    /** @type {number} The intensity/size of the shadow blur. */
     glowBlur = 20;
 
     /**

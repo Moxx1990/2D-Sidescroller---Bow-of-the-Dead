@@ -4,23 +4,14 @@
  */
 class Enemy extends MoveableObject {
 
-   /** @type {number} Health points of the basic enemy. */
     energy = 1;
-    /** @type {number} Rendering height on the canvas. */
     height = 150;
-    /** @type {number} Rendering width on the canvas. */
     width = 200;
-   /** @type {number} The current frame in the walking sequence. */
     currentWalkFrame = 0;
-    /** @type {number} Total number of frames in the walking sprite sheet. */
     totalWalkFrames = 6;
-    /** @type {number} The current frame in the death sequence. */
     currentDeathFrame = 0;
-    /** @type {number} Total number of frames in the death sprite sheet. */
     totalDeathFrames = 5;
-    /** @type {number} The width of a single frame within the sprite sheet image. */
     frameWidth = 128;
-    /** @type {number} The height of a single frame within the sprite sheet image. */
     frameHeight = 128;
 
     /**
@@ -30,7 +21,7 @@ class Enemy extends MoveableObject {
     constructor() {
         super();
         this.offsetLeft = 110;
-        this.offsetRight = 120;
+        this.offsetRight = 100;
         this.offsetTop = 75;
         this.offsetBottom = 5;
         this.loadImage('img/Enemy/Basic/Walk.png');

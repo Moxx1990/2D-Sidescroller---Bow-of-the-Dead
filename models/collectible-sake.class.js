@@ -4,13 +4,9 @@
  */
 class CollectibleSake extends MoveableObject {
     
-    /** @type {number} Rendering width of the sake bottle. */
     width = 20;
-    /** @type {number} Rendering height of the sake bottle. */
     height = 20;
-    /** @type {string} Color of the glow effect (RGBA). */
     glowColor = 'rgba(255, 255, 255, 0.8)';
-    /** @type {number} Counter used to calculate the sine-wave for the pulsating glow animation. */
     glowAnimationStep = 0;
 
     /**

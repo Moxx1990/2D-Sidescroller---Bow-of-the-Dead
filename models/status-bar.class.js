@@ -4,7 +4,6 @@
  */
 class StatusBar extends DrawableObject {
 
-    /** @type {string[]} Array of image paths representing different health levels (0% to 100%). */
     IMAGES = [
         "img/Statusbar/health/green/0.png",
         "img/Statusbar/health/green/20.png",
@@ -13,8 +12,6 @@ class StatusBar extends DrawableObject {
         "img/Statusbar/health/green/80.png",
         "img/Statusbar/health/green/100.png"
     ];
-
-    /** @type {number} Current health state represented as a value from 0 to 5. */
     percentage = 5;
 
     /**

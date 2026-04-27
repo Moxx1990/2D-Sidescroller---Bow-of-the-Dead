@@ -157,11 +157,9 @@ button:active {
     100% { transform: rotate(0deg); }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px), (max-width: 1366px) and (orientation: landscape) {
 
-    h1, 
-    .settings-menu, 
-    .game-footer {
+    h1, .game-footer {
         display: none !important;
     }
 
@@ -171,6 +169,34 @@ button:active {
         width: 100%;
         height: 100%;
         touch-action: none;
+    }
+
+    .settings-menu {
+        display: block !important; 
+        background: none !important;
+        pointer-events: none;
+    }
+
+    .settings-menu button {
+        display: none;
+    }
+
+    body.game-not-started .game-footer {
+        display: flex !important; 
+        position: fixed;
+        bottom: 10px;
+        width: 100%;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    body.game-not-started .game-footer a {
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 5px 15px;
+        text-decoration: none;
+        font-size: 14px;
+        border-radius: 5px;
     }
 
     .game {
@@ -199,6 +225,10 @@ button:active {
     }
 
     .hud-overlay {
+        display: none !important;
+    }
+
+    body.game-started .hud-overlay {
         display: flex !important;
         position: absolute;
         bottom: 20px;
@@ -208,6 +238,22 @@ button:active {
         padding: 0 30px;
         pointer-events: none; 
         z-index: 100;
+    }
+
+    body.game-started .btn-restart {
+        display: block !important;
+        pointer-events: auto;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 999;
+        background-color: rgba(255, 255, 255, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        color: white;
+        padding: 10px 15px;
+        backdrop-filter: blur(5px);
+        font-size: 14px;
     }
 
     .hud-overlay .d-none {

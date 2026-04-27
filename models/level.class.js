@@ -4,15 +4,10 @@
  */
 class Level {
 
-/** @type {Enemy[]} Array containing all enemies (including the boss) in this level. */
     enemies;
-    /** @type {BackGroundObject[]} Array of background layers for the parallax or scrolling effect. */
     backgrounds;
-    /** @type {CollectibleArrow[]} Array of arrow items available for the player to pick up. */
     collectibleArrows;
-    /** @type {CollectibleSake[]} Array of sake items available for the player to collect. */
     sakes;
-    /** @type {number} The x-coordinate where the level officially ends. */
     level_end_x = 2100;
 
     /**

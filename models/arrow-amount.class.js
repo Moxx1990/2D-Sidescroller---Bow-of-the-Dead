@@ -4,7 +4,6 @@
  */
 class ArrowAmount extends DrawableObject {
     
-    /** @type {number} The current quantity of arrows the character can throw. */
     arrows = 3;
 
     /**

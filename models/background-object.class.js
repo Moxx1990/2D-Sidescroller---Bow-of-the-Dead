@@ -4,13 +4,9 @@
  */
 class BackGroundObject extends MoveableObject {
 
-    /** @type {number} The standard width of a background segment, usually matching the canvas width. */
     width = 720;
-    /** @type {number} The standard height of a background segment, usually matching the canvas height. */
     height = 480;
-    /** @type {number} The X-coordinate position where this background segment begins. */
     x;
-    /** @type {number} The Y-coordinate position where this background segment begins. */
     y;
 
     /**

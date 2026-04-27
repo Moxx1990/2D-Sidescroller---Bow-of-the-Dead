@@ -8,6 +8,7 @@ let isMuted = localStorage.getItem('gameMuted') === 'true';
  */
 function init() {
     canvas = document.getElementById("canvas");
+    document.body.classList.add('game-not-started');
     buttonPressedEvents();
     buttonUnpressedEvents();
 };
@@ -16,6 +17,8 @@ function init() {
  * Starts the game, initializes the level, hides the start screen, and creates the world instance.
  */
 function startGame() {
+    document.body.classList.remove('game-not-started');
+    document.body.classList.add('game-started');
     initLevel();
     document.getElementById('startScreen').classList.add('d-none');
     let hud = document.getElementById('hud');
@@ -25,6 +28,7 @@ function startGame() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard, level1);
     document.getElementById('restartButton').classList.remove('d-none');
+    document.querySelector('.btn-restart').classList.remove('d-none');
 }
 
 /**

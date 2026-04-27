@@ -3,7 +3,7 @@
  * Extends DrawableObject and renders both an icon and a dynamic text counter.
  */
 class SakeAmount extends DrawableObject {
-    /** @type {number} The current number of sake bottles collected by the player. */
+    
     sakeCount = 0;
 
     /**

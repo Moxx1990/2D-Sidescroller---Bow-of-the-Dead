@@ -4,19 +4,12 @@
  */
 class DrawableObject {
 
-    /** @type {HTMLImageElement} The primary image object to be drawn. */
     img;
-    /** @type {Object<string, HTMLImageElement>} Cache for preloaded images, indexed by their file paths. */
     imageCache = {};
-    /** @type {number} Index of the currently active image in an animation sequence. */
     currentImage = 0;
-    /** @type {number} The X-coordinate position on the canvas. */
     x = 120;
-    /** @type {number} The Y-coordinate position on the canvas. */
     y = 270;
-    /** @type {number} Height of the object on the canvas. */
     height = 150;
-    /** @type {number} Width of the object on the canvas. */
     width = 200;
 
     /**
